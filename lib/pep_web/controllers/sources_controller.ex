@@ -13,4 +13,12 @@ defmodule PepWeb.SourcesController do
       |> render("create.json", source: source)
     end
   end
+
+  def show(conn, _params) do
+    with source_list <- Pep.list_sources() do
+      conn
+      |> put_status(:ok)
+      |> render("show.json", source: source_list)
+    end
+  end
 end

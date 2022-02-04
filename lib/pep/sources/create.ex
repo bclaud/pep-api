@@ -65,7 +65,7 @@ defmodule Pep.Sources.Create do
     end
   end
 
-  defp handle_source({:ok, %Source{} = source}), do: source
+  defp handle_source({:ok, %Source{}} = source), do: source
 
   defp handle_source({:error, %Changeset{} = changeset}) do
     {:error, Error.build(:bad_request, changeset)}
