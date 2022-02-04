@@ -2,7 +2,8 @@ defmodule Pep.Sources.Create do
   alias Pep.{Source, Repo}
 
   def call(ano_mes) when is_binary(ano_mes) do
-    with {:ok, zip_body} <- get_zip(ano_mes),
+    with :ok <- new_source?(ano_mes),
+         {:ok, zip_body} <- get_zip(ano_mes),
          {:ok, zip_path} <- write_zip(zip_body, ano_mes),
          {:ok, report_path} <- unzip(zip_path) do
       %{ano_mes: ano_mes, source_path: zip_path, report_path: report_path}
@@ -13,6 +14,16 @@ defmodule Pep.Sources.Create do
 
   def call(_ano_mes), do: {:error, "ano_mes digitado incorretamente. Exemplo: 202112"}
 
+  defp new_source?(ano_mes) do
+    case Repo.get_by(Source, ano_mes: ano_mes) do
+      nil ->
+        :ok
+
+      %Source{} = _source ->
+        {:error, "Source " <> ano_mes <> " ja adicionada ao banco de dados"}
+    end
+  end
+
   defp get_zip(ano_mes) do
     url = "https://transparencia.gov.br/download-de-dados/pep/" <> ano_mes
 
@@ -22,6 +33,9 @@ defmodule Pep.Sources.Create do
 
       {:ok, %HTTPoison.Response{body: _zip_body, status_code: 404}} ->
         {:error, "Arquivo nao encontrado para o ano_mes informado"}
+
+      {:ok, %HTTPoison.Response{body: _zip_body, status_code: _}} ->
+        {:error, "Resposta inesperada do servidor da transparencia"}
     end
   end
 
