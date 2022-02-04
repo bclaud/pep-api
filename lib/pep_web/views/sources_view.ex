@@ -6,6 +6,6 @@ defmodule PepWeb.SourcesView do
   @attributes_show ~w(inserted_at ano_mes)a
 
   def render("create.json", %{source: %Source{} = source}) do
-    Map.take(source, @attributes_show)
+    %{source: Map.take(source, @attributes_show), message: "Source importada"}
   end
 end

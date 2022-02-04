@@ -1,5 +1,7 @@
 defmodule Pep.Sources.Create do
-  alias Pep.{Source, Repo}
+  alias Pep.{Source, Repo, Error}
+
+  alias Ecto.Changeset
 
   def call(ano_mes) when is_binary(ano_mes) do
     with :ok <- new_source?(ano_mes),
@@ -9,10 +11,12 @@ defmodule Pep.Sources.Create do
       %{ano_mes: ano_mes, source_path: zip_path, report_path: report_path}
       |> Source.changeset()
       |> Repo.insert()
+      |> handle_source()
     end
   end
 
-  def call(_ano_mes), do: {:error, "ano_mes digitado incorretamente. Exemplo: 202112"}
+  def call(_ano_mes),
+    do: {:error, Error.build(:bad_request, "ano_mes digitado incorretamente. Exemplo: 202112")}
 
   defp new_source?(ano_mes) do
     case Repo.get_by(Source, ano_mes: ano_mes) do
@@ -20,7 +24,8 @@ defmodule Pep.Sources.Create do
         :ok
 
       %Source{} = _source ->
-        {:error, "Source " <> ano_mes <> " ja adicionada ao banco de dados"}
+        {:error,
+         Error.build(:bad_request, "Source " <> ano_mes <> " ja adicionada ao banco de dados")}
     end
   end
 
@@ -32,10 +37,10 @@ defmodule Pep.Sources.Create do
         {:ok, zip_body}
 
       {:ok, %HTTPoison.Response{body: _zip_body, status_code: 404}} ->
-        {:error, "Arquivo nao encontrado para o ano_mes informado"}
+        {:error, Error.build(:not_found, "Arquivo nao encontrado para o ano_mes informado")}
 
       {:ok, %HTTPoison.Response{body: _zip_body, status_code: _}} ->
-        {:error, "Resposta inesperada do servidor da transparencia"}
+        {:error, Error.build(:bad_request, "Resposta inesperada do servidor da transparencia")}
     end
   end
 
@@ -44,7 +49,7 @@ defmodule Pep.Sources.Create do
 
     case File.write(path, zip_body) do
       :ok -> {:ok, path}
-      {:error, _reason} -> {:error, "Erro ao salvar zip"}
+      {:error, _reason} -> {:error, Error.build(:bad_request, "Erro ao salvar zip")}
     end
   end
 
@@ -58,5 +63,11 @@ defmodule Pep.Sources.Create do
       {:ok, [report_path]} -> {:ok, to_string(report_path)}
       {:error, reason} -> {:error, reason}
     end
+  end
+
+  defp handle_source({:ok, %Source{} = source}), do: source
+
+  defp handle_source({:error, %Changeset{} = changeset}) do
+    {:error, Error.build(:bad_request, changeset)}
   end
 end

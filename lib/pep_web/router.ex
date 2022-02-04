@@ -7,6 +7,8 @@ defmodule PepWeb.Router do
 
   scope "/api", PepWeb do
     pipe_through :api
+
+    post "/sources/:ano_mes", SourcesController, :create
   end
 
   # Enables LiveDashboard only for development
