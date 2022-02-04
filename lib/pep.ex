@@ -1,9 +1,5 @@
 defmodule Pep do
-  @moduledoc """
-  Pep keeps the contexts that define your domain
-  and business logic.
+  alias Pep.Sources.Create, as: SourceCreate
 
-  Contexts are also responsible for managing your data, regardless
-  if it comes from the database, an external API or others.
-  """
+  defdelegate create_source(mes_ano), to: SourceCreate, as: :call
 end
