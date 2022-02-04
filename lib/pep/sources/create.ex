@@ -3,10 +3,11 @@ defmodule Pep.Sources.Create do
 
   def call(ano_mes) when is_binary(ano_mes) do
     with {:ok, zip_body} <- get_zip(ano_mes),
-         {:ok, zip_path} <- write_zip(zip_body, ano_mes)
-         {:ok, report_path} <- unzip(zip_path, ano_mes) do
+         {:ok, zip_path} <- write_zip(zip_body, ano_mes),
+         {:ok, report_path} <- unzip(zip_path) do
       %{ano_mes: ano_mes, source_path: zip_path, report_path: report_path}
       |> Source.changeset()
+      |> Repo.insert()
     end
   end
 
@@ -26,12 +27,22 @@ defmodule Pep.Sources.Create do
 
   defp write_zip(zip_body, ano_mes) do
     path = "priv/downloaded/zip/" <> ano_mes <> ".zip"
-    IO.inspect(path, label: "Path:::::::")
 
     case File.write(path, zip_body) do
       :ok -> {:ok, path}
-      {:error, reason} -> {:error, "Erro ao salvar zip"}
-      IO.inspect(reason, label: "Reason:::::")
+      {:error, _reason} -> {:error, "Erro ao salvar zip"}
+    end
+  end
+
+  defp unzip(source_path) do
+    report_folder = "priv/reports/"
+
+    erl_source_path = String.to_charlist(source_path)
+    erl_report_folder = String.to_charlist(report_folder)
+
+    case :zip.unzip(erl_source_path, [{:cwd, erl_report_folder}]) do
+      {:ok, [report_path]} -> {:ok, to_string(report_path)}
+      {:error, reason} -> {:error, reason}
     end
   end
 end

@@ -5,11 +5,10 @@ defmodule Pep.Source do
 
   @required_fields [:ano_mes, :report_path, :source_path]
 
-  schema "users" do
+  schema "sources" do
     field :ano_mes, :string
     field :report_path, :string
     field :source_path, :string
-
 
     timestamps()
   end
