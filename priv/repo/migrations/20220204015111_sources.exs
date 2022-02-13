@@ -1,9 +1,8 @@
 defmodule Pep.Repo.Migrations.Sources do
   use Ecto.Migration
 
-
   def change do
-    create table (:sources) do
+    create table(:sources) do
       add :ano_mes, :string
       add :report_path, :string
       add :source_path, :string

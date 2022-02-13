@@ -1,6 +1,4 @@
 defmodule Pep.Parser do
-  alias Pep.Repo
-
   def call(ano_mes) do
     ano_mes
     |> get_csv()
@@ -60,26 +58,41 @@ defmodule Pep.Parser do
                    } = _line ->
       %{
         cpf: sanitize_cpf(cpf),
-        nome: remove_quotes(nome),
+        nome: nomalize_str(nome),
         sigla: remove_quotes(sigla),
         descr: remove_quotes(descr),
         nivel: remove_quotes(nivel),
         regiao: remove_quotes(regiao),
         data_inicio: handle_date(data_inicio),
         data_fim: handle_date(data_fim),
-        data_carincia: handle_date(data_carincia)
+        data_carincia: handle_date(data_carincia),
+        cpf_nome: sanitize_cpf(cpf) <> remove_quotes(nome)
       }
     end)
   end
 
-  defp remove_quotes(str), do: String.replace(str, "\"", "")
+  defp nomalize_str(str) do
+    str
+    |> String.normalize(:nfd)
+    |> String.replace("\"", "")
+    |> String.replace(~r/[^A-Za-z\s]/u, "")
+  end
 
-  defp sanitize_cpf(cpf), do: String.replace(cpf, ["*", ".", "-", "\""], "")
+  defp remove_quotes(str) do
+    Enum.join(for <<c::utf8 <- str>>, do: <<c::utf8>>)
+    |> String.replace("\"", "")
+  end
+
+  defp sanitize_cpf(cpf) do
+    cpf
+    |> remove_quotes
+    |> String.replace(["*", ".", "-"], "")
+  end
 
   defp handle_date(date) do
     case adjust_date(date) do
-      {:ok, date} ->
-        date
+      {:ok, _date_type} ->
+        remove_quotes(date)
 
       {:error, _reason} ->
         "Nao informado"
