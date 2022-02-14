@@ -14,25 +14,11 @@ defmodule Pep.Sources.Create do
       |> Source.changeset()
       |> Repo.insert()
       |> handle_source()
-
-      import_to_db(ano_mes)
     end
   end
 
   def call(_ano_mes),
     do: {:error, Error.build(:bad_request, "ano_mes digitado incorretamente. Exemplo: 202112")}
-
-  def import_to_db(ano_mes) do
-    changesets =
-      ano_mes
-      |> Parser.call()
-      |> Enum.map(fn item -> PepStruct.changeset(item) end)
-
-    invalid_changesets = Enum.filter(changesets, fn changeset -> changeset.valid? == false end)
-    # IO.inspect(changesets)
-    Enum.each(changesets, fn changeset -> Repo.insert(changeset) end)
-    # Repo.transaction(fn -> Enum.each(changesets, &Repo.update!(&1, [])) end)
-  end
 
   defp new_source?(ano_mes) do
     case Repo.get_by(Source, ano_mes: ano_mes) do
