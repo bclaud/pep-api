@@ -14,6 +14,12 @@ defmodule Pep.Sources.Create do
       |> Source.changeset()
       |> Repo.insert()
       |> handle_source()
+
+      source = Repo.get_by(Source, ano_mes: ano_mes)
+
+      Parser.call(source)
+      |> Enum.map(fn pep -> PepStruct.changeset(pep) end)
+      |> Enum.each(fn changeset -> Pep.Repo.insert(changeset) end)
     end
   end
 

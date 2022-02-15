@@ -9,6 +9,7 @@ defmodule Pep.Source do
     field :ano_mes, :string
     field :report_path, :string
     field :source_path, :string
+    has_many :peps, Pep.Pep
 
     timestamps()
   end

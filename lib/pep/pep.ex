@@ -3,8 +3,8 @@ defmodule Pep.Pep do
 
   import Ecto.Changeset
 
-  @all_fields ~w(cpf nome sigla descr nivel regiao data_inicio data_fim data_carincia cpf_nome)a
-  @required_fields ~w(cpf nome data_inicio data_fim data_carincia cpf_nome)a
+  @all_fields ~w(cpf nome sigla descr nivel regiao data_inicio data_fim data_carincia source_id)a
+  @required_fields ~w(cpf nome data_inicio data_fim data_carincia )a
 
   schema "peps" do
     field :cpf, :string
@@ -16,7 +16,7 @@ defmodule Pep.Pep do
     field :data_inicio, :string
     field :data_fim, :string
     field :data_carincia, :string
-    field :cpf_nome, :string
+    belongs_to :source, Pep.Source
 
     timestamps()
   end
@@ -25,6 +25,5 @@ defmodule Pep.Pep do
     %__MODULE__{}
     |> cast(params, @all_fields)
     |> validate_required(@required_fields)
-    |> unique_constraint(:cpf_nome)
   end
 end
