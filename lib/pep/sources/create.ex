@@ -10,16 +10,13 @@ defmodule Pep.Sources.Create do
          {:ok, zip_body} <- get_zip(ano_mes),
          {:ok, zip_path} <- write_zip(zip_body, ano_mes),
          {:ok, report_path} <- unzip(zip_path) do
-      %{ano_mes: ano_mes, source_path: zip_path, report_path: report_path}
-      |> Source.changeset()
-      |> Repo.insert()
-      |> handle_source()
+      changeset =
+        %{ano_mes: ano_mes, source_path: zip_path, report_path: report_path}
+        |> Source.changeset()
+        |> Repo.insert()
 
-      source = Repo.get_by(Source, ano_mes: ano_mes)
-
-      Parser.call(source)
-      |> Enum.map(fn pep -> PepStruct.changeset(pep) end)
-      |> Enum.each(fn changeset -> Pep.Repo.insert(changeset) end)
+      Task.async(fn -> parse_import_to_db(ano_mes) end)
+      handle_source(changeset)
     end
   end
 
@@ -77,5 +74,13 @@ defmodule Pep.Sources.Create do
 
   defp handle_source({:error, %Changeset{} = changeset}) do
     {:error, Error.build(:bad_request, changeset)}
+  end
+
+  defp parse_import_to_db(ano_mes) do
+    source = Repo.get_by(Source, ano_mes: ano_mes)
+
+    Parser.call(source)
+    |> Enum.map(fn pep -> PepStruct.changeset(pep) end)
+    |> Enum.each(fn changeset -> Pep.Repo.insert(changeset) end)
   end
 end
