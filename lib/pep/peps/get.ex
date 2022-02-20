@@ -17,7 +17,7 @@ defmodule Pep.Peps.Get do
     nome = "%" <> nome <> "%"
     query = from p in PepSchema, where: ilike(p.nome, ^nome), preload: [:source]
 
-    case Repo.all(query) |> Repo.preload(:source) do
+    case Repo.all(query) do
       pep -> {:ok, pep}
       [] -> {:error, Error.build_not_found_error()}
     end
