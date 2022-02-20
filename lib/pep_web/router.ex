@@ -10,6 +10,8 @@ defmodule PepWeb.Router do
 
     post "/sources/:ano_mes", SourcesController, :create
     get "/sources", SourcesController, :show
+
+    get "/pep/:partial_cpf", PepsController, :show
   end
 
   # Enables LiveDashboard only for development

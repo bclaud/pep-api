@@ -22,3 +22,9 @@ erl_crash.dump
 # Ignore package tarball (built via "mix hex.build").
 pep-*.tar
 
+#Annoying DS_store
+.DS_Store
+
+# Reports and downloads
+priv/reports/*
+priv/downloaded/*
