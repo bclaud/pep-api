@@ -5,5 +5,7 @@ defmodule Pep do
 
   defdelegate create_source(mes_ano), to: SourceCreate, as: :call
   defdelegate list_sources(), to: SourceGet, as: :call
+
   defdelegate get_by_cpf(partial_cpf), to: PepGet, as: :get_by_cpf
+  defdelegate get_by_nome(nome), to: PepGet, as: :get_by_nome
 end

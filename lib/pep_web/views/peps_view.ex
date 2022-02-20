@@ -6,9 +6,7 @@ defmodule PepWeb.PepsView do
   @attributes_show ~w(cpf nome sigla regiao data_inicio data_fim data_carincia id)
 
   def render("show.json", %{pep: peps}) do
-    [pep | _others] = peps
-    json_pep(pep)
-    # Enum.map(peps, &json_pep/1)
+    Enum.map(peps, &json_pep/1)
   end
 
   def json_pep(%PepStruct{} = pep) do

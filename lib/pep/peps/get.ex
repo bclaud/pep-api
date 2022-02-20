@@ -1,10 +1,10 @@
 defmodule Pep.Peps.Get do
   import Ecto.Query
-  alias Pep.{Repo, Source, Error}
-  alias Pep.Pep, as: PepStruct
+  alias Pep.{Repo, Error}
+  alias Pep.Pep, as: PepSchema
 
   def get_by_cpf(partial_cpf) do
-    query = from(Pep.Pep, where: [cpf: ^partial_cpf])
+    query = from(PepSchema, where: [cpf: ^partial_cpf])
 
     case Repo.all(query) |> Repo.preload(:source) do
       pep -> {:ok, pep}
@@ -14,6 +14,12 @@ defmodule Pep.Peps.Get do
   end
 
   def get_by_nome(nome) do
-    # query = from(Pep.Pep, where: [])
+    nome = "%" <> nome <> "%"
+    query = from p in PepSchema, where: ilike(p.nome, ^nome)
+
+    case Repo.all(query) |> Repo.preload(:source) do
+      pep -> {:ok, pep}
+      [] -> {:error, Error.build_not_found_error()}
+    end
   end
 end

@@ -12,6 +12,7 @@ defmodule PepWeb.Router do
     get "/sources", SourcesController, :show
 
     get "/pep/:partial_cpf", PepsController, :show
+    get "/pep/nome/:nome", PepsController, :show
   end
 
   # Enables LiveDashboard only for development
