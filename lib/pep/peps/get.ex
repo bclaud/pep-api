@@ -4,9 +4,9 @@ defmodule Pep.Peps.Get do
   alias Pep.Pep, as: PepSchema
 
   def get_by_cpf(partial_cpf) do
-    query = from(PepSchema, where: [cpf: ^partial_cpf])
+    query = from(PepSchema, where: [cpf: ^partial_cpf], preload: [:source])
 
-    case Repo.all(query) |> Repo.preload(:source) do
+    case Repo.all(query) do
       pep -> {:ok, pep}
       # TODO arrumar a match abaixo
       [] -> {:error, Error.build_not_found_error()}
@@ -15,7 +15,7 @@ defmodule Pep.Peps.Get do
 
   def get_by_nome(nome) do
     nome = "%" <> nome <> "%"
-    query = from p in PepSchema, where: ilike(p.nome, ^nome)
+    query = from p in PepSchema, where: ilike(p.nome, ^nome), preload: [:source]
 
     case Repo.all(query) |> Repo.preload(:source) do
       pep -> {:ok, pep}
