@@ -3,6 +3,7 @@ defmodule Pep.Pep do
 
   import Ecto.Changeset
 
+  @primary_key {:id, Ecto.UUID, autogenerate: true}
   @all_fields ~w(cpf nome sigla descr nivel regiao data_inicio data_fim data_carincia source_id)a
   @required_fields ~w(cpf nome data_inicio data_fim data_carincia )a
 

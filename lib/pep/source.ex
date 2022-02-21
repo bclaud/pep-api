@@ -3,6 +3,7 @@ defmodule Pep.Source do
 
   import Ecto.Changeset
 
+  @primary_key {:id, Ecto.UUID, autogenerate: true}
   @required_fields [:ano_mes, :report_path, :source_path]
 
   schema "sources" do

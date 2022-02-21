@@ -11,6 +11,10 @@ config :pep,
   ecto_repos: [Pep.Repo],
   generators: [binary_id: true]
 
+config :pep, Pep.Repo,
+  migration_primary_key: [type: :binary_id],
+  migration_foreign_key: [type: :binary_id]
+
 # Configures the endpoint
 config :pep, PepWeb.Endpoint,
   url: [host: "localhost"],
