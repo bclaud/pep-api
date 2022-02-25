@@ -17,7 +17,7 @@ defmodule Pep.Pep do
     field :data_inicio, :string
     field :data_fim, :string
     field :data_carincia, :string
-    belongs_to :source, Pep.Source
+    belongs_to :source, Pep.Source, type: :binary_id
 
     timestamps()
   end
