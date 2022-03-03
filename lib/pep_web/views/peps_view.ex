@@ -3,13 +3,11 @@ defmodule PepWeb.PepsView do
 
   alias Pep.Pep, as: PepStruct
 
-  @attributes_show ~w(cpf nome sigla regiao data_inicio data_fim data_carincia id)
-
   def render("show.json", %{pep: peps}) do
     Enum.map(peps, &json_pep/1)
   end
 
-  def json_pep(%PepStruct{} = pep) do
+  defp json_pep(%PepStruct{} = pep) do
     %{
       nome: pep.nome,
       cpf_parcial: pep.cpf,
@@ -17,7 +15,7 @@ defmodule PepWeb.PepsView do
       regiao: pep.regiao,
       data_inicio: pep.data_inicio,
       data_fim: pep.data_fim,
-      data_carincia: pep.data_carincia,
+      data_carencia: pep.data_carincia,
       fonte: %{
         ano_mes: pep.source.ano_mes,
         data_de_insercao: naive_to_utc_sp(pep.source.inserted_at)
