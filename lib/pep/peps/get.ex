@@ -1,6 +1,6 @@
 defmodule Pep.Peps.Get do
   import Ecto.Query
-  alias Pep.{Repo, Error}
+  alias Pep.Repo
   alias Pep.Pep, as: PepSchema
 
   def get_by_cpf(partial_cpf) do
@@ -9,11 +9,9 @@ defmodule Pep.Peps.Get do
     query =
       from(PepSchema, where: [cpf: ^partial_cpf, source_id: ^ultima_fonte], preload: [:source])
 
-    case Repo.all(query) do
-      pep -> {:ok, pep}
-      # TODO arrumar a match abaixo
-      [] -> {:error, Error.build_not_found_error()}
-    end
+    pep = Repo.all(query)
+
+    {:ok, pep}
   end
 
   def get_by_nome(nome) do
@@ -25,10 +23,9 @@ defmodule Pep.Peps.Get do
         where: ilike(p.nome, ^nome) and p.source_id == ^ultima_fonte,
         preload: [:source]
 
-    case Repo.all(query) do
-      pep -> {:ok, pep}
-      [] -> {:error, Error.build_not_found_error()}
-    end
+    pep = Repo.all(query)
+
+    {:ok, pep}
   end
 
   def get_last_source() do
