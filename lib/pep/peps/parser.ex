@@ -3,20 +3,21 @@ defmodule Pep.Sources.Parser do
 
   alias Pep.Pep, as: PepStruct
   alias Pep.{Repo, Source}
+  alias Ecto.UUID
 
   def import_to_db(ano_mes) do
-    Task.async(fn -> parse_import_to_db(ano_mes) end)
+    Task.start_link(fn -> parse_import_to_db(ano_mes) end)
   end
 
   defp parse_import_to_db(ano_mes) do
     source = Repo.get_by(Source, ano_mes: ano_mes)
 
     parse(source)
-    |> Stream.map(fn pep -> PepStruct.changeset(pep) end)
-    |> Enum.each(fn changeset -> Pep.Repo.insert(changeset) end)
+    |> Stream.chunk_every(5000)
+    |> Enum.each(fn chunck -> Repo.insert_all(PepStruct, chunck) end)
   end
 
-  defp parse(%{ano_mes: ano_mes, id: id} = _source) do
+  defp parse(%{ano_mes: ano_mes, id: source_id} = _source) do
     ("priv/reports/" <> ano_mes <> "_PEP.csv")
     |> File.stream!()
     |> CSVParser.parse_stream()
@@ -32,6 +33,7 @@ defmodule Pep.Sources.Parser do
                        data_carencia
                      ] ->
       %{
+        id: "",
         cpf: :binary.copy(cpf),
         nome: :binary.copy(nome),
         sigla: :binary.copy(sigla),
@@ -41,18 +43,27 @@ defmodule Pep.Sources.Parser do
         data_inicio: :binary.copy(data_inicio),
         data_fim: :binary.copy(data_fim),
         data_carencia: :binary.copy(data_carencia),
-        source_id: ""
+        source_id: "",
+        inserted_at: "",
+        updated_at: ""
       }
     end)
     |> Stream.map(fn pep -> fix_enconding(pep) end)
-    |> Stream.map(fn pep -> %{pep | source_id: id} end)
+    |> Stream.map(fn pep -> %{pep | source_id: source_id} end)
+    |> Stream.map(fn pep -> %{pep | id: UUID.generate()} end)
+    |> Stream.map(fn pep ->
+      %{pep | inserted_at: NaiveDateTime.utc_now() |> NaiveDateTime.truncate(:second)}
+    end)
+    |> Stream.map(fn pep ->
+      %{pep | updated_at: NaiveDateTime.utc_now() |> NaiveDateTime.truncate(:second)}
+    end)
     |> Stream.map(fn %{cpf: cpf} = pep -> %{pep | cpf: sanitize_cpf(cpf)} end)
     |> Enum.to_list()
   end
 
   defp fix_enconding(pep) do
     pep
-    |> Enum.map(fn {key, value} -> {key, latin1_to_utf8(value)} end)
+    |> Stream.map(fn {key, value} -> {key, latin1_to_utf8(value)} end)
     |> Enum.into(%{})
   end
 
