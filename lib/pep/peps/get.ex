@@ -28,7 +28,7 @@ defmodule Pep.Peps.Get do
     {:ok, pep}
   end
 
-  def get_last_source() do
+  defp get_last_source() do
     query = from s in Pep.Source, select: [s.ano_mes, s.id]
 
     [_ano_mes, id] =
