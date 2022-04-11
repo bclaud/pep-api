@@ -11,7 +11,7 @@ defmodule Pep.Repo.Migrations.CreatePepsTable do
       add(:regiao, :string)
       add(:data_inicio, :string)
       add(:data_fim, :string)
-      add(:data_carincia, :string)
+      add(:data_carencia, :string)
       add(:source_id, references(:sources))
 
       timestamps()

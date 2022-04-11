@@ -15,7 +15,7 @@ defmodule PepWeb.PepsView do
       regiao: pep.regiao,
       data_inicio: pep.data_inicio,
       data_fim: pep.data_fim,
-      data_carencia: pep.data_carincia,
+      data_carencia: pep.data_carencia,
       fonte: %{
         ano_mes: pep.source.ano_mes,
         data_de_insercao: naive_to_utc_sp(pep.source.inserted_at)

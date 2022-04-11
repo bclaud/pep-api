@@ -29,7 +29,7 @@ defmodule Pep.Sources.Parser do
                        regiao,
                        data_inicio,
                        data_fim,
-                       data_carincia
+                       data_carencia
                      ] ->
       %{
         cpf: :binary.copy(cpf),
@@ -40,7 +40,7 @@ defmodule Pep.Sources.Parser do
         regiao: :binary.copy(regiao),
         data_inicio: :binary.copy(data_inicio),
         data_fim: :binary.copy(data_fim),
-        data_carincia: :binary.copy(data_carincia),
+        data_carencia: :binary.copy(data_carencia),
         source_id: ""
       }
     end)

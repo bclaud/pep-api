@@ -4,8 +4,8 @@ defmodule Pep.Pep do
   import Ecto.Changeset
 
   @primary_key {:id, Ecto.UUID, autogenerate: true}
-  @all_fields ~w(cpf nome sigla descr nivel regiao data_inicio data_fim data_carincia source_id)a
-  @required_fields ~w(cpf nome data_inicio data_fim data_carincia )a
+  @all_fields ~w(cpf nome sigla descr nivel regiao data_inicio data_fim data_carencia source_id)a
+  @required_fields ~w(cpf nome data_inicio data_fim data_carencia )a
 
   schema "peps" do
     field :cpf, :string
@@ -16,7 +16,7 @@ defmodule Pep.Pep do
     field :regiao, :string
     field :data_inicio, :string
     field :data_fim, :string
-    field :data_carincia, :string
+    field :data_carencia, :string
     belongs_to :source, Pep.Source, type: :binary_id
 
     timestamps()
