@@ -12,7 +12,7 @@ defmodule Pep.Sources.Parser do
     source = Repo.get_by(Source, ano_mes: ano_mes)
 
     parse(source)
-    |> Enum.map(fn pep -> PepStruct.changeset(pep) end)
+    |> Stream.map(fn pep -> PepStruct.changeset(pep) end)
     |> Enum.each(fn changeset -> Pep.Repo.insert(changeset) end)
   end
 
@@ -44,10 +44,10 @@ defmodule Pep.Sources.Parser do
         source_id: ""
       }
     end)
+    |> Stream.map(fn pep -> fix_enconding(pep) end)
+    |> Stream.map(fn pep -> %{pep | source_id: id} end)
+    |> Stream.map(fn %{cpf: cpf} = pep -> %{pep | cpf: sanitize_cpf(cpf)} end)
     |> Enum.to_list()
-    |> Enum.map(fn pep -> fix_enconding(pep) end)
-    |> Enum.map(fn pep -> %{pep | source_id: id} end)
-    |> Enum.map(fn %{cpf: cpf} = pep -> %{pep | cpf: sanitize_cpf(cpf)} end)
   end
 
   defp fix_enconding(pep) do
