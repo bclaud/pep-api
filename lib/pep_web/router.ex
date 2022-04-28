@@ -3,6 +3,7 @@ defmodule PepWeb.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
+    plug PepWeb.Plugs.QueryParams
   end
 
   scope "/api", PepWeb do
