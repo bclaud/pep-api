@@ -28,3 +28,4 @@ pep-*.tar
 # Reports and downloads
 priv/reports/*
 priv/downloaded/*
+.envrc

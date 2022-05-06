@@ -6,6 +6,7 @@ defmodule Pep.Sources.Parser do
   alias Ecto.UUID
 
   def import_to_db(ano_mes) do
+    create_directories()
     Task.start_link(fn -> parse_import_to_db(ano_mes) end)
   end
 
@@ -78,5 +79,14 @@ defmodule Pep.Sources.Parser do
   defp sanitize_cpf(cpf) do
     cpf
     |> String.replace(["*", ".", "-"], "")
+  end
+
+  defp create_directories do
+    reports_path = "priv/reports"
+
+    case File.exists?(reports_path) do
+      true -> :ok
+      false -> File.mkdir_p!(reports_path)
+    end
   end
 end

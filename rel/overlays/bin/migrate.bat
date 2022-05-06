@@ -1,0 +1,1 @@
+call "%~dp0\pep" eval Pep.Release.migrate

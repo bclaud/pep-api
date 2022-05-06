@@ -2,6 +2,8 @@ defmodule Pep.Sources.Download do
   alias Pep.Error
 
   def call(ano_mes) do
+    create_directories()
+
     case get_zip(ano_mes) do
       {:ok, zip_body} -> write_zip(zip_body, ano_mes)
       {:error, _reason} = error -> error
@@ -29,6 +31,15 @@ defmodule Pep.Sources.Download do
     case File.write(path, zip_body) do
       :ok -> {:ok, path}
       {:error, _reason} -> {:error, Error.build(:bad_request, "Erro ao salvar zip")}
+    end
+  end
+
+  defp create_directories do
+    downloads_path = "priv/downloaded/zip"
+
+    case File.exists?(downloads_path) do
+      true -> :ok
+      false -> File.mkdir_p!(downloads_path)
     end
   end
 end
