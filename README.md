@@ -1,19 +1,89 @@
-# Pep
+# Pessoas Politicamente Expostas
+API para importar dados disponibilizados pelo [Portal da Transparencia](https://www.portaltransparencia.gov.br/download-de-dados/pep) e então disponibilizá-los para consulta em Endpoints http.
 
-To start your Phoenix server:
+Apesar de ainda não estar completa, atualmente a API está funcional e em produção a partir no domínio https://pep.claudlabs.com
+### Consultas
+Consulta por CPF parcial [^1]
+```http
+GET /api/pep/:cpf_parcial
+```
+Exemplo:
+```http
+GET pep.claudlabs.com/api/pep/378239
+```
+Response:
+```json
+[
+  {
+    "cpf_parcial": "378239",
+    "data_carencia": "31/12/2025",
+    "data_fim": "31/12/2020",
+    "data_inicio": "01/01/2017",
+    "fonte": {
+      "ano_mes": "202203",
+      "data_de_insercao": "2022-05-09T20:44:16-03:00"
+    },
+    "nome": "ABEL HACK",
+    "regiao": "MUN. DE RIO NEGRINHO-SC",
+    "sigla": "VEREAD"
+  }
+]
+```
+**Sempre será retornado uma lista**, pois um político pode ocupar um ou mais cargos entre o período considerado como um PEP. A maioria dos casos é de 1:1.
 
-  * Install dependencies with `mix deps.get`
-  * Create and migrate your database with `mix ecto.setup`
-  * Start Phoenix endpoint with `mix phx.server` or inside IEx with `iex -S mix phx.server`
+Consulta por nome:
+```HTTP
+GET /pep/:nome
+```
+Não é necessário inserir o nome inteiro, mas deve fornecer ao menos 3 caracteres.
 
-Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
+### Atualizar dados
 
-Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
+Quando houver novas publicações no portal da transparência, basta fazer uma requisição para o endpont abaixo informando o ano_mes que deseja importar.
+```http
+POST /api/pep/source/:ano_mes
+```
 
-## Learn more
+Exemplo:
+```http
+POST https://pep.claudlabs.com/api/pep/sources/202205
+```
 
-  * Official website: https://www.phoenixframework.org/
-  * Guides: https://hexdocs.pm/phoenix/overview.html
-  * Docs: https://hexdocs.pm/phoenix
-  * Forum: https://elixirforum.com/c/phoenix-forum
-  * Source: https://github.com/phoenixframework/phoenix
+O site da transparência fica offline com alguma frequência, então se não funcionar na primeira tentativa, tente novamente em alguns minutos.
+
+Se der tudo certo, a aplicação iniciara a tarefa **async** e em poucos segundos os dados estarão disponíveis para consulta
+
+E para consulta das fontes importadas:
+```http
+GET /api/pep/source
+```
+--- 
+[^1]: CPF parcial*: Os dados são disponibilizados nesse formato
+
+### Hospede a aplicação
+#todo
+
+### Projeto
+
+- #### Features
+	- ~~Download CSV
+	- ~~Parser CSV
+	- ~~Adicionar informações ao banco de dados
+	- ~~Endpoint point para importação das informações
+	- ~~Endpoint para consultas
+	- Docker
+	- Documentação para rodar o projeto localmente
+
+- #### Opcional
+	- ~~Melhorar a performance da importação ao banco de dados
+	- OpenAPI
+
+- #### Fix
+	- A imagem docker não está a criar as pastas que armazenam os documentos automaticamente
+
+
+### Licença
+
+Esse código tem o principal objetivo a evolução técnica do autor, sem qualquer fim lucrativo, portanto, é proibido a utilização/distribuição que busque lucro diretamente.
+
+Deve obedecer todas as leis e condutas eventualmente exigidas pela Controladoria Geral da União.
