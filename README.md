@@ -58,24 +58,23 @@ E para consulta das fontes importadas:
 GET /api/pep/source
 ```
 --- 
-[^1]: CPF parcial*: Os dados são disponibilizados nesse formato
+[^1]: CPF parcial*: Os dados são disponibilizados nesse formato pelo Portal da Transparência
 
 ### Hospede a aplicação
-#todo
 
 ### Projeto
 
 - #### Features
-	- ~~Download CSV
-	- ~~Parser CSV
-	- ~~Adicionar informações ao banco de dados
-	- ~~Endpoint point para importação das informações
-	- ~~Endpoint para consultas
+	- ~~Download CSV~
+	- ~~Parser CS~~
+	- ~~Adicionar informações ao banco de dados~~
+	- ~~Endpoint point para imp~~ortação das informações~~
+	- ~~Endpoint para consultas~~
 	- Docker
 	- Documentação para rodar o projeto localmente
 
 - #### Opcional
-	- ~~Melhorar a performance da importação ao banco de dados
+	- ~~Melhorar a performance da importação ao banco de dados~~
 	- OpenAPI
 
 - #### Fix
