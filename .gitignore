@@ -29,3 +29,4 @@ pep-*.tar
 priv/reports/*
 priv/downloaded/*
 .envrc
+/.postgres
