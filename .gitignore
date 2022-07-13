@@ -30,3 +30,4 @@ priv/reports/*
 priv/downloaded/*
 .envrc
 /.postgres
+.nix-mix

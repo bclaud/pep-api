@@ -55,9 +55,9 @@
           export LANG=en_US.UTF-8
 
           # postges related
-          export PGUSER="solfacil"
-          export PGPASSWORD="solfacil"
-          export PGDATABASE="cobranca_dev"
+          export PGUSER="postgres"
+          export PGPASSWORD="pep-postgres"
+          export PGDATABASE="db"
           # keep all your db data in a folder inside the project
           export PGHOST="$PWD/.postgres"
           export PGDATA="$PGHOST/data"
