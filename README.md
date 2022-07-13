@@ -9,7 +9,7 @@ GET /api/pep/:cpf_parcial
 ```
 Exemplo:
 ```http
-GET pep.claudlabs.com/api/pep/378239
+GET http://pep.claudlabs.com/api/pep/378239
 ```
 Response:
 ```json
@@ -65,11 +65,12 @@ GET /api/pep/source
 ### Projeto
 
 - #### Features
-	- ~~Download CSV~
+	- ~~Download CSV~~
 	- ~~Parser CS~~
 	- ~~Adicionar informações ao banco de dados~~
 	- ~~Endpoint point para imp~~ortação das informações~~
 	- ~~Endpoint para consultas~~
+	- Unit Tests
 	- Docker
 	- Documentação para rodar o projeto localmente
 
