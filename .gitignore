@@ -31,3 +31,10 @@ priv/downloaded/*
 .envrc
 /.postgres
 .nix-mix
+
+# idea
+.idea
+
+/pep.iml
+
+.direnv

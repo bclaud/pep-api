@@ -3,7 +3,7 @@ import Config
 # Configure your database
 config :pep, Pep.Repo,
   username: "postgres",
-  password: "pep-postgres",
+  password: "postgres",
   hostname: "localhost",
   database: "pep_dev",
   show_sensitive_data_on_connection_error: true,

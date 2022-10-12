@@ -29,7 +29,7 @@
             libiconv
             packages.elixir
             glibcLocales
-            postgresql
+            erlangR25
           ];
         shellHook = ''
           # create local tmp folders
@@ -53,27 +53,6 @@
           export ERL_AFLAGS="-kernel shell_history enabled"
 
           export LANG=en_US.UTF-8
-
-          # postges related
-          export PGUSER="postgres"
-          export PGPASSWORD="pep-postgres"
-          export PGDATABASE="db"
-          # keep all your db data in a folder inside the project
-          export PGHOST="$PWD/.postgres"
-          export PGDATA="$PGHOST/data"
-          export PGLOG="$PGHOST/server.log"
-
-          if [[ ! -d "$PGDATA" ]]; then
-            # initital set up of database server
-            initdb --auth=trust --no-locale --encoding=UTF8 -U=$PGUSER >/dev/null
-
-            # point to correct unix sockets
-            echo "unix_socket_directories = '$PGHOST'" >> "$PGDATA/postgresql.conf"
-            # creates loacl database user
-            echo "CREATE USER $PGUSER SUPERUSER;" | postgres --single -E postgres
-            # creates local databse
-            echo "CREATE DATABASE $PGDATABASE;" | postgres --single -E postgres
-          fi
         '';
       };
 
