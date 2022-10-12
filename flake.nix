@@ -13,11 +13,6 @@
       pkgs.mkShell {
         name = "gosto";
         buildInputs =
-          let
-            inherit (pkgs.beam) packagesWith;
-            inherit (pkgs.beam.interpreters) erlangR25;
-            packages = packagesWith erlangR25;
-          in
           with pkgs; [
             gnumake
             gcc
@@ -27,9 +22,9 @@
             libxml2
             curl
             libiconv
-            packages.elixir
             glibcLocales
-            erlangR25
+            elixir
+            erlang
           ];
         shellHook = ''
           # create local tmp folders
