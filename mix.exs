@@ -47,7 +47,8 @@ defmodule Pep.MixProject do
       {:httpoison, "~> 1.8"},
       {:tzdata, "~> 1.1"},
       {:nimble_csv, "~> 1.2"},
-      {:credo, "~> 1.6", only: [:dev, :test], runtime: false}
+      {:credo, "~> 1.6", only: [:dev, :test], runtime: false},
+      {:cors_plug, "~> 3.0"}
     ]
   end
 
