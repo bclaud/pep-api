@@ -4,6 +4,12 @@ with pkgs;
 
 let
   projectName = "pep-api";
+  beamPkg = pkgs.beam.packagesWith pkgs.erlangR25;
+
+  elixir14 = beamPkg.elixir.override {
+      version = "1.14.2";
+      sha256 = "ABS+tXWm0vP3jb4ixWSi84Ltya7LHAuEkGMuAoZqHPA=";
+  };
 in
 
 mkShell {
@@ -11,7 +17,7 @@ mkShell {
 
   buildInputs = [
     glibcLocalesUtf8
-    beam.packages.erlang.elixir
+    elixir14
     nodejs_latest
     # postgresql_15
     # yarn2nix
