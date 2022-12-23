@@ -14,6 +14,7 @@
       in
       with pkgs;
       {
+          defaultPackage = callPackage ./default.nix;
           devShell = callPackage ./shell.nix { };
       }
     );
