@@ -11,11 +11,17 @@
       let
         inherit (nixpkgs.lib) optional;
         pkgs = import nixpkgs { inherit system; };
+        beamPkg = pkgs.beam.packagesWith pkgs.erlangR25;
+
+        elixir14 = beamPkg.elixir.override {
+          version = "1.14.2";
+          sha256 = "ABS+tXWm0vP3jb4ixWSi84Ltya7LHAuEkGMuAoZqHPA=";
+          };
       in
       with pkgs;
       {
-          defaultPackage = callPackage ./default.nix { };
-          devShell = callPackage ./shell.nix { };
+          defaultPackage = callPackage ./default.nix { mixEnv = "dev"; version = "0.0.1"; projectElixir = elixir14;};
+          devShell = callPackage ./shell.nix { projectElixir = elixir14; };
       }
     );
 }

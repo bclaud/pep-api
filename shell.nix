@@ -1,15 +1,9 @@
-{ pkgs ? import <nixpkgs> { } }:
+{ pkgs ? import <nixpkgs> { }, projectElixir }:
 
 with pkgs;
 
 let
   projectName = "pep-api";
-  beamPkg = pkgs.beam.packagesWith pkgs.erlangR25;
-
-  elixir14 = beamPkg.elixir.override {
-      version = "1.14.2";
-      sha256 = "ABS+tXWm0vP3jb4ixWSi84Ltya7LHAuEkGMuAoZqHPA=";
-  };
 in
 
 mkShell {
@@ -17,8 +11,8 @@ mkShell {
 
   buildInputs = [
     glibcLocalesUtf8
-    elixir14
     nodejs_latest
+    projectElixir
     # postgresql_15
     # yarn2nix
     # nodePackages.node2nix
@@ -39,8 +33,4 @@ mkShell {
   # + http://lists.linuxfromscratch.org/pipermail/lfs-support/2004-June/023900.html
   # export LC_ALL=en_US.UTF-8
   LOCALE_ARCHIVE = if pkgs.stdenv.isLinux then "${pkgs.glibcLocalesUtf8}/lib/locale/locale-archive" else "";
-
-  shellHook = ''
-    echo "=== ${projectName} ==="
-  '';
 }
