@@ -15,7 +15,6 @@ let
 in
   beamPackages.mixRelease { 
     inherit mixNixDeps pname version src mixEnv; 
-    elixir = projectElixir;
     preConfigure = ''
       locale
     '';
