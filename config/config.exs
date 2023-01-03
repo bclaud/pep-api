@@ -48,3 +48,5 @@ import_config "#{config_env()}.exs"
 
 # config timezone
 config :elixir, :time_zone_database, Tzdata.TimeZoneDatabase
+
+config :tzdata, :data_dir, "/etc/elixir_tzdata_data"
