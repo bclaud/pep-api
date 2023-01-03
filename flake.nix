@@ -10,13 +10,12 @@
     flake-utils.lib.eachDefaultSystem (system:
       let
         elixir_overlay = (self: super: rec {
-          erlang = super.erlangR25;
-          elixir = super.elixir.override {
+          elixir = (super.beam.packagesWith pkgs.erlangR25).elixir.override {
             version = "1.14.2";
-            sha256 = super.lib.fakeSha256;
-            minimumOTPVersion = "25";
-          };
-        });
+            sha256 = "sha256-ABS+tXWm0vP3jb4ixWSi84Ltya7LHAuEkGMuAoZqHPA=";
+            };
+          }
+        );
         
         inherit (nixpkgs.lib) optional;
         pkgs = import nixpkgs { inherit system; overlays = [ elixir_overlay ];};
@@ -25,7 +24,7 @@
       with pkgs;
       {
           defaultPackage = callPackage ./default.nix { pkgs = pkgs; mixEnv = "dev"; version = "0.0.1"; projectElixir = elixir;};
-          devShell = callPackage ./shell.nix { projectElixir = elixir; };
+          devShell = callPackage ./shell.nix { pkgs = pkgs;};
       }
     );
 }

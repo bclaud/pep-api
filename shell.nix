@@ -1,4 +1,4 @@
-{ pkgs ? import <nixpkgs> { }, projectElixir }:
+{ pkgs }:
 
 with pkgs;
 
@@ -12,7 +12,7 @@ mkShell {
   buildInputs = [
     glibcLocalesUtf8
     nodejs_latest
-    projectElixir
+    elixir
     # postgresql_15
     # yarn2nix
     # nodePackages.node2nix
