@@ -12,6 +12,7 @@ mkShell {
   buildInputs = [
     glibcLocalesUtf8
     nodejs_latest
+    mix2nix
     elixir
     # postgresql_15
     # yarn2nix
