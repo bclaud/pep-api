@@ -6,10 +6,14 @@ let
   pname = "pep";
   src = ./.;
 
-  mixNixDeps = with pkgs; import ./mix_deps.nix { inherit lib beamPackages; };
+  mixFodDeps = beamPackages.fetchMixDeps {
+    pname = "mix-deps-${pname}";
+    inherit src version;
+    sha256 = "sha256-sYWaznDp2sOosDBHzIn4xUAOLN7T0y42nqyItj91OW8=";
+  };
 in
   beamPackages.mixRelease { 
-    inherit mixNixDeps pname version src mixEnv elixir; 
+    inherit mixFodDeps pname version src mixEnv elixir; 
 
     LC_ALL = "en_US.UTF-8"; 
     LANG = "en_US.UTF-8";
