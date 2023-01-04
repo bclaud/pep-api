@@ -24,8 +24,13 @@
 
       in
       with pkgs;
-      {
-          defaultPackage = callPackage ./default.nix { pkgs = pkgs; mixEnv = "dev"; version = "0.0.1";};
+     rec  {
+          packages = rec { 
+            pep = callPackage ./default.nix { pkgs = pkgs; mixEnv = "dev"; version = "0.0.1"; };
+            container = callPackage ./container.nix { pkgs = pkgs; pep = pep; };
+          };
+
+          defaultPackage = packages.pep;
           devShell = callPackage ./shell.nix { pkgs = pkgs;};
       }
     );
