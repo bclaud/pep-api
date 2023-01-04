@@ -1,6 +1,6 @@
 defmodule Pep.Sources.Unzip do
   def call(source_path) do
-    report_folder = "priv/reports/"
+    report_folder = "/tmp/elixir_pep/reports/"
 
     erl_source_path = String.to_charlist(source_path)
     erl_report_folder = String.to_charlist(report_folder)

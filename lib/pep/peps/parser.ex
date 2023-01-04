@@ -19,7 +19,7 @@ defmodule Pep.Sources.Parser do
   end
 
   defp parse(%{ano_mes: ano_mes, id: source_id} = _source) do
-    ("priv/reports/" <> ano_mes <> "_PEP.csv")
+    ("/tmp/elixir_pep/reports/" <> ano_mes <> "_PEP.csv")
     |> File.stream!()
     |> CSVParser.parse_stream()
     |> Stream.map(fn [
@@ -82,7 +82,7 @@ defmodule Pep.Sources.Parser do
   end
 
   defp create_directories do
-    reports_path = "priv/reports"
+    reports_path = "/tmp/elixir_pep/reports"
 
     case File.exists?(reports_path) do
       true -> :ok

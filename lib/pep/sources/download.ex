@@ -26,7 +26,7 @@ defmodule Pep.Sources.Download do
   end
 
   defp write_zip(zip_body, ano_mes) do
-    path = "priv/downloaded/zip/" <> ano_mes <> ".zip"
+    path = "/tmp/elixir_pep/downloaded/zip/" <> ano_mes <> ".zip"
 
     case File.write(path, zip_body) do
       :ok -> {:ok, path}
@@ -35,7 +35,7 @@ defmodule Pep.Sources.Download do
   end
 
   defp create_directories do
-    downloads_path = "priv/downloaded/zip"
+    downloads_path = "/tmp/elixir_pep/downloaded/zip"
 
     case File.exists?(downloads_path) do
       true -> :ok
