@@ -29,4 +29,7 @@ pkgs.dockerTools.buildImage {
     ];
     pathsToLink = [ "/bin" ];
   };
+  
+  diskSize = 1024;
+  buildVMMemorySize = 512;
 }
