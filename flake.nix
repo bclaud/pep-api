@@ -10,7 +10,7 @@
     flake-utils.lib.eachDefaultSystem (system:
       let
         elixir_overlay = (self: super: rec {
-          erlang = super.erlangR25.override { elixir = elixir; };
+          erlang = super.erlangR25;
           beamPackages = super.beam.packagesWith erlang;
           elixir = beamPackages.elixir.override {
             version = "1.14.2";
