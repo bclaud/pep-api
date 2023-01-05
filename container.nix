@@ -26,7 +26,6 @@ pkgs.dockerTools.buildImage {
       gnused
       gnugrep
       bash
-      sh
     ];
     pathsToLink = [ "/bin" ];
   };
