@@ -4,7 +4,7 @@ pkgs.dockerTools.buildImage {
   name = "pep-container";
 
   config = {
-    Cmd = [ "pep" "start" ];
+    Cmd = [ "sh" "-c" "bin/pep eval Pep.Release.migrate && bin/pep start" ];
     Env = [
       "USER=nobody"
       "PHX_SERVER=true"

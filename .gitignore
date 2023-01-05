@@ -28,7 +28,6 @@ pep-*.tar
 # Reports and downloads
 priv/reports/*
 priv/downloaded/*
-.envrc
 /.postgres
 .nix-mix
 
@@ -39,3 +38,5 @@ priv/downloaded/*
 
 .direnv
 .nix-shell/
+#env vars
+env.list
