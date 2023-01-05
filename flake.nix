@@ -23,9 +23,6 @@
         pkgs = import nixpkgs {
           inherit system;
           overlays = [ elixir_overlay ];
-          crossSystem = {
-            config = "aarch64-unknown-linux-gnu";
-          };
         };
 
       in
