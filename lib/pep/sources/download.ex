@@ -13,14 +13,14 @@ defmodule Pep.Sources.Download do
   defp get_zip(ano_mes) do
     url = "https://transparencia.gov.br/download-de-dados/pep/" <> ano_mes
 
-    case HTTPoison.get(url) do
+    case HTTPoison.get(url, [], follow_redirect: true) do
       {:ok, %HTTPoison.Response{body: zip_body, status_code: 200}} ->
         {:ok, zip_body}
 
       {:ok, %HTTPoison.Response{body: _zip_body, status_code: 404}} ->
         {:error, Error.build(:not_found, "Arquivo nao encontrado para o ano_mes informado")}
 
-      {:ok, %HTTPoison.Response{body: _zip_body, status_code: _}} ->
+      {:ok, %HTTPoison.Response{body: _resp, status_code: _}} ->
         {:error, Error.build(:bad_request, "Resposta inesperada do servidor da transparencia")}
     end
   end
