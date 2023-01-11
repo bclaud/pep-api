@@ -22,9 +22,6 @@ pkgs.dockerTools.buildImage {
     name = "image-root";
     paths = with pkgs; [
       pep
-      coreutils
-      gnused
-      gnugrep
       bash
     ];
     pathsToLink = [ "/bin" ];
