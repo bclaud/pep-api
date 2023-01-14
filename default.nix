@@ -10,7 +10,7 @@ let
 
   mixFodDeps = beamPackages.fetchMixDeps {
     pname = "mix-deps-${pname}";
-    inherit src version;
+    inherit src version elixir;
     sha256 = "sha256-sYWaznDp2sOosDBHzIn4xUAOLN7T0y42nqyItj91OW8=";
   };
 in
