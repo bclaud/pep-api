@@ -5,6 +5,7 @@ with pkgs; let
   ciTest = pkgs.writeScriptBin "ci-test" ''
   # echo "Avoid utf-8 issues"
   export LOCALE_ARCHIVE = "${pkgs.glibcLocalesUtf8}/lib/locale/locale-archive"
+  export LANG=en_US.UTF-8
 
   echo "Installing hex and rebar"
   mix local.hex --force
