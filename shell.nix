@@ -3,10 +3,11 @@ with pkgs; let
   projectName = "pep-api";
   
   ciTest = pkgs.writeScriptBin "ci-test" ''
+  LOCALE_ARCHIVE = "${pkgs.glibcLocalesUtf8}/lib/locale/locale-archive"
   mix local.hex --force
   mix local.rebar --force
-  
-  mix test
+  MIX_ENV=test mix deps.get
+  MIX_ENV=test mix test
   '';
 in
   mkShell {
