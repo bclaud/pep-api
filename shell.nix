@@ -3,9 +3,14 @@ with pkgs; let
   projectName = "pep-api";
   
   ciTest = pkgs.writeScriptBin "ci-test" ''
-  LOCALE_ARCHIVE = "${pkgs.glibcLocalesUtf8}/lib/locale/locale-archive"
+  # echo "Avoid utf-8 issues"
+  export LOCALE_ARCHIVE = "${pkgs.glibcLocalesUtf8}/lib/locale/locale-archive"
+
+  echo "Installing hex and rebar"
   mix local.hex --force
   mix local.rebar --force
+
+  echo "Fetching Deps"
   MIX_ENV=test mix deps.get
   MIX_ENV=test mix test
   '';
