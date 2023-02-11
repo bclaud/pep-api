@@ -1,12 +1,20 @@
 {pkgs}:
 with pkgs; let
   projectName = "pep-api";
+  
+  ciTest = pkgs.writeScriptBin "ci-test" ''
+  mix local.hex --force
+  mix local.rebar --force
+  
+  mix test
+  '';
 in
   mkShell {
     name = "${projectName}-shell";
 
     buildInputs =
       [
+        ciTest
         glibcLocalesUtf8
         elixir
         # nodejs_latest

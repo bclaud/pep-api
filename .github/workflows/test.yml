@@ -11,4 +11,4 @@ jobs:
       uses: cachix/install-nix-action@v17
       with:
         nix_path: nixpkgs=channel:nixos-unstable
-    - run: nix develop --experimental-features 'nix-command flakes' --command mix test
+    - run: nix develop --experimental-features 'nix-command flakes' --command ci-test
