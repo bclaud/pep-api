@@ -15,11 +15,11 @@
       system: let
         elixir_overlay = (
           self: super: rec {
-            erlang = super.erlangR25;
+            erlang = super.erlang_26;
             beamPackages = super.beam.packagesWith erlang;
             elixir = beamPackages.elixir.override {
-              version = "1.14.2";
-              sha256 = "sha256-ABS+tXWm0vP3jb4ixWSi84Ltya7LHAuEkGMuAoZqHPA=";
+              version = "1.17.1";
+              sha256 = "sha256-a7A+426uuo3bUjggkglY1lqHmSbZNpjPaFpQUXYtW9k=";
             };
             hex = beamPackages.hex.override {inherit elixir;};
             rebar3 = beamPackages.rebar3;

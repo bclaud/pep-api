@@ -24,6 +24,7 @@ in
         ciTest
         glibcLocalesUtf8
         elixir
+        elixir_ls
         # nodejs_latest
         # postgresql_15
         # yarn2nix
