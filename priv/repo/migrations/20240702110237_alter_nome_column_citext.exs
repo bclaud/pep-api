@@ -5,6 +5,5 @@ defmodule Pep.Repo.Migrations.AlterNomeColumnCitext do
     alter table("peps") do
       modify :nome, :citext
     end
-
   end
 end

@@ -3,6 +3,5 @@ defmodule Pep.Repo.Migrations.AddNameIndex do
 
   def change do
     create index("peps", :nome)
-
   end
 end

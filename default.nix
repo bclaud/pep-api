@@ -8,7 +8,7 @@ with pkgs; let
   mixFodDeps = beamPackages.fetchMixDeps {
     pname = "mix-deps-${pname}";
     inherit src version;
-    sha256 = "sha256-p7Vg3LElfyhNyiD5SlT4ZWR5LlynPOlc0w/dx66bbOo=";
+    sha256 = "sha256-pZPexIgz2cM3gGJOyxJCK/e7EZRfG2iLlOUuamVkZeI=";
   };
 in
   beamPackages.mixRelease {
