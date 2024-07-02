@@ -41,7 +41,7 @@ Não é necessário inserir o nome inteiro, mas deve fornecer ao menos 3 caracte
 
 Quando houver novas publicações no portal da transparência, basta fazer uma requisição para o endpont abaixo informando o ano_mes que deseja importar.
 ```http
-POST /api/pep/source/:ano_mes
+POST /api/pep/sources/:ano_mes
 ```
 
 Exemplo:

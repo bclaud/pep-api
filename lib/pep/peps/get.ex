@@ -20,7 +20,7 @@ defmodule Pep.Peps.Get do
 
     query =
       from p in PepSchema,
-        where: ilike(p.nome, ^nome) and p.source_id == ^ultima_fonte,
+        where: like(p.nome, ^nome) and p.source_id == ^ultima_fonte,
         preload: [:source]
 
     pep = Repo.all(query)
