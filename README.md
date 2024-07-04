@@ -75,6 +75,8 @@ GET /api/pep/sources
 	- Documentação para rodar o projeto localmente
 	- Unit Tests
 	- CI com Build distribuido e cache
+	  - Com cache próprio será possível diminuir consideravelmente o tamanho da imagem, visto que é utilizado um elixir/erlang com wx e outros bloats, pois é o disponibilizado pelo cache do nixos/nixpkgs
+
 
 - #### Opcional
 	- ~~Melhorar a performance da importação ao banco de dados~~
