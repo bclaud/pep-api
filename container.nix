@@ -1,8 +1,9 @@
 {
   pkgs,
+  nix2containerPkgs,
   pep,
 }:
-pkgs.dockerTools.buildImage {
+nix2containerPkgs.nix2container.buildImage {
   name = "pep-container";
 
   config = {

@@ -25,6 +25,7 @@ in
         glibcLocalesUtf8
         elixir
         elixir_ls
+        mix2nix
         # nodejs_latest
         # postgresql_15
         # yarn2nix
