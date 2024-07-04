@@ -55,7 +55,7 @@ Se der tudo certo, a aplicação iniciara a tarefa **async** e em poucos segundo
 
 E para consulta das fontes importadas:
 ```http
-GET /api/pep/source
+GET /api/pep/sources
 ```
 --- 
 [^1]: CPF parcial*: Os dados são disponibilizados nesse formato pelo Portal da Transparência
@@ -66,21 +66,18 @@ GET /api/pep/source
 
 - #### Features
 	- ~~Download CSV~~
-	- ~~Parser CS~~
+	- ~~Parser CSV~~
 	- ~~Adicionar informações ao banco de dados~~
-	- ~~Endpoint point para imp~~ortação das informações~~
+	- ~~Endpoint point para importação das informações~~
 	- ~~Endpoint para consultas~~
-	- Unit Tests
-	- Docker
+	- ~~Docker~~
+	- Genserver para atualização automática das fontes
 	- Documentação para rodar o projeto localmente
+	- Unit Tests
+	- CI com Build distribuido e cache
 
 - #### Opcional
 	- ~~Melhorar a performance da importação ao banco de dados~~
-	- OpenAPI
-
-- #### Fix
-	- A imagem docker não está a criar as pastas que armazenam os documentos automaticamente
-
 
 ### Licença
 
