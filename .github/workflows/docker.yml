@@ -40,7 +40,7 @@ jobs:
 
       - name: Push Docker image to GitHub Container Registry
         run: |
-          IMAGE_ID=ghcr.io/${{ github.repository }}/pep-container:latest
+          IMAGE_ID=ghcr.io/${{ github.repository }}/pep-container-${{ matrix.platform }}:latest
           docker tag $(docker images --format "{{.Repository}}:{{.Tag}}" | head -n 1) $IMAGE_ID
           docker push $IMAGE_ID
 
