@@ -24,11 +24,7 @@ jobs:
             experimental-features = nix-command flakes
 
       - name: Build Docker image with Nix
-        run: nix build .#docker
-
-      - name: Load Docker image
-        run: |
-          docker load < $(nix path-info .#docker)
+        run: nix run .#container.copyToDockerDaemon
 
       - name: Log in to GitHub Container Registry
         uses: docker/login-action@v2
@@ -39,10 +35,7 @@ jobs:
 
       - name: Push Docker image to GitHub Container Registry
         run: |
-          IMAGE_ID=ghcr.io/${{ github.repository }}/webserver:latest
+          IMAGE_ID=ghcr.io/${{ github.repository }}/pep-container:latest
           docker tag $(docker images --format "{{.Repository}}:{{.Tag}}" | head -n 1) $IMAGE_ID
           docker push $IMAGE_ID
 
-      - name: Trigger Render Deployment
-        run: |
-          curl -X POST ${{ secrets.RENDER_DEPLOY_HOOK }}

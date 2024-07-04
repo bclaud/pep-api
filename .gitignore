@@ -40,3 +40,4 @@ priv/downloaded/*
 .nix-shell/
 #env vars
 env.list
+.env

@@ -5,6 +5,7 @@
 }:
 nix2containerPkgs.nix2container.buildImage {
   name = "pep-container";
+  tag = "latest";
 
   config = {
     Cmd = ["sh" "-c" "bin/pep eval Pep.Release.migrate && bin/pep start"];
@@ -34,6 +35,4 @@ nix2containerPkgs.nix2container.buildImage {
     pathsToLink = ["/bin"];
   };
 
-  diskSize = 1024;
-  buildVMMemorySize = 512;
 }

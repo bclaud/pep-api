@@ -4,7 +4,7 @@ with pkgs;
 let
   # beamPackages = beam_minimal.packagesWith beam_minimal.interpreters.erlang_26;
   # elixir = beam_minimal.packages.erlang_26.elixir_1_16;
-  pname = "pep-api";
+  pname = "pep";
   version = "0.0.1";
 
   src = ./.;
