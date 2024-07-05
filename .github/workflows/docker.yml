@@ -19,14 +19,24 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
+
+      # - name: ZeroTier
+      #   uses: zerotier/github-action@v1.0.1
+      #   with:
+      #     network_id: ${{ secrets.ZEROTIER_NETWORK_ID }}
+      #     auth_token: ${{ secrets.ZEROTIER_CENTRAL_TOKEN }}
+      #
 
       - name: Setup Nix
-        uses: cachix/install-nix-action@v16
+        uses: cachix/install-nix-action@v25
         with:
           install_url: https://releases.nixos.org/nix/nix-2.19.3/install
           extra_nix_config: |
             experimental-features = nix-command flakes
+
+      - name: Enable nix cache action
+        uses: DeterminateSystems/magic-nix-cache-action@main
 
       - name: Build Docker image with Nix
         run: nix run .#container.copyToDockerDaemon
