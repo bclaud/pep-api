@@ -7,6 +7,9 @@ defmodule Pep.Application do
 
   @impl true
   def start(_type, _args) do
+    # days_in_ms = 1_000 * 60 * 60 * 24 * 3
+    days_in_ms = 1_000
+
     children = [
       # Start the Ecto repository
       Pep.Repo,
@@ -18,7 +21,8 @@ defmodule Pep.Application do
       PepWeb.Endpoint,
       # Start a worker by calling: Pep.Worker.start_link(arg)
       # {Pep.Worker, arg}
-      {Pep.Sources.LatestAgent, 0}
+      {Pep.Sources.LatestAgent, 0},
+      {Pep.Sources.UpdateJob, days_in_ms}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
