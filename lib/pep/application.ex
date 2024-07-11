@@ -15,9 +15,10 @@ defmodule Pep.Application do
       # Start the PubSub system
       {Phoenix.PubSub, name: Pep.PubSub},
       # Start the Endpoint (http/https)
-      PepWeb.Endpoint
+      PepWeb.Endpoint,
       # Start a worker by calling: Pep.Worker.start_link(arg)
       # {Pep.Worker, arg}
+      {Pep.Sources.LatestAgent, 0}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

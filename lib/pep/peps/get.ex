@@ -2,6 +2,7 @@ defmodule Pep.Peps.Get do
   import Ecto.Query
   alias Pep.Repo
   alias Pep.Pep, as: PepSchema
+  alias Pep.Sources.LatestAgent
 
   def get_by_cpf(partial_cpf) do
     ultima_fonte = get_last_source()
@@ -16,7 +17,7 @@ defmodule Pep.Peps.Get do
 
   def get_by_nome(nome) do
     nome = "%" <> nome <> "%"
-    ultima_fonte = get_last_source()
+    ultima_fonte = LatestAgent.value()
 
     query =
       from p in PepSchema,
@@ -28,7 +29,7 @@ defmodule Pep.Peps.Get do
     {:ok, pep}
   end
 
-  defp get_last_source() do
+  def get_last_source() do
     query = from s in Pep.Source, select: [s.ano_mes, s.id]
 
     [_ano_mes, id] =
