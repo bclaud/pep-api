@@ -7,8 +7,7 @@ defmodule Pep.Application do
 
   @impl true
   def start(_type, _args) do
-    # days_in_ms = 1_000 * 60 * 60 * 24 * 3
-    days_in_ms = 1_000
+    days_in_ms = 1_000 * 60 * 60 * 24 * 3
 
     children = [
       # Start the Ecto repository

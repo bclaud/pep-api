@@ -4,7 +4,9 @@ defmodule Pep.Sources.UpdateJob do
 
   alias Pep.Sources.LatestAgent
   # <1>
-  alias Pep.def(start_link(run_interval)) do
+  alias Pep
+
+  def(start_link(run_interval)) do
     GenServer.start_link(__MODULE__, run_interval, name: __MODULE__)
   end
 
@@ -23,7 +25,7 @@ defmodule Pep.Sources.UpdateJob do
   @impl true
   def handle_info(:perform_cron_work, run_interval) do
     # TODO agent needs to return both the ID and ano_mes
-    latest_source = LatestAgent.value()
+    # latest_source = LatestAgent.value()
 
     # TODO do the thing..
     LatestAgent.update()
