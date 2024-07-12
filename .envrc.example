@@ -1,5 +1,0 @@
-export SECRET_KEY_BASE=123123123
-export DATABASE_URL=ecto://postgres:postgres@localhost/database
-export LANG="en_US.UTF-8"
-
-use flake
