@@ -1,12 +1,19 @@
 defmodule Pep.Sources.Download do
+  require Logger
   alias Pep.Error
 
   def call(ano_mes) do
+    Logger.info("Starting downloading #{ano_mes}")
     create_directories()
 
     case get_zip(ano_mes) do
-      {:ok, zip_body} -> write_zip(zip_body, ano_mes)
-      {:error, _reason} = error -> error
+      {:ok, zip_body} ->
+        Logger.info("Download successful ano_mes=#{ano_mes}")
+        write_zip(zip_body, ano_mes)
+
+      {:error, _reason} = error ->
+        Logger.info("Download failed ano_mes=#{ano_mes}")
+        error
     end
   end
 

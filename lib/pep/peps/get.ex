@@ -5,10 +5,10 @@ defmodule Pep.Peps.Get do
   alias Pep.Sources.LatestAgent
 
   def get_by_cpf(partial_cpf) do
-    ultima_fonte = LatestAgent.value().id
+    ultima_fonte_id = LatestAgent.value().id
 
     query =
-      from(PepSchema, where: [cpf: ^partial_cpf, source_id: ^ultima_fonte], preload: [:source])
+      from(PepSchema, where: [cpf: ^partial_cpf, source_id: ^ultima_fonte_id], preload: [:source])
 
     pep = Repo.all(query)
 
@@ -37,7 +37,6 @@ defmodule Pep.Peps.Get do
       |> Enum.map(fn each -> List.update_at(each, 0, &String.to_integer/1) end)
       |> Enum.max()
 
-
-     Repo.get!(Pep.Source, id)
+    Repo.get(Pep.Source, id)
   end
 end

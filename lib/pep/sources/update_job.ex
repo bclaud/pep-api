@@ -3,7 +3,7 @@ defmodule Pep.Sources.UpdateJob do
   require Logger
 
   alias Pep.Sources.LatestAgent
-  # <1>
+  alias Pep.Sources.Create
   alias Pep
 
   def(start_link(run_interval)) do
@@ -12,7 +12,6 @@ defmodule Pep.Sources.UpdateJob do
 
   @impl true
   def init(run_interval) do
-    # <2>
     {:ok, run_interval, {:continue, :schedule_next_run}}
   end
 
@@ -24,14 +23,43 @@ defmodule Pep.Sources.UpdateJob do
 
   @impl true
   def handle_info(:perform_cron_work, run_interval) do
-    # TODO agent needs to return both the ID and ano_mes
-    # latest_source = LatestAgent.value()
+    Logger.info("#{__MODULE__} Performing cron job...")
 
-    # TODO do the thing..
+    latest_source = LatestAgent.value()
+
+    Logger.info("#{__MODULE__} Latest source #{inspect(latest_source.ano_mes)}")
+
+    case latest_source do
+      nil ->
+        # I could easily start downloading the current source here but not sure if it's a good idea
+        Logger.info(
+          "#{__MODULE__} There is no pep source to look for. Skipping source update job"
+        )
+
+      source ->
+        update_range = -3..3
+
+        Enum.each(update_range, fn x ->
+          target_ano_mes = shift_ano_mes(source.ano_mes, x)
+          Logger.info("#{__MODULE__} Requesting #{target_ano_mes}...")
+          Create.call(target_ano_mes)
+        end)
+    end
+
+    Logger.info("#{__MODULE__} Updating agent")
     LatestAgent.update()
 
-    Logger.info("Performing cron work")
-
+    Logger.info("#{__MODULE__} Finished cron job...")
     {:noreply, run_interval, {:continue, :schedule_next_run}}
+  end
+
+  defp shift_ano_mes(<<ano::binary-size(4), mes::binary>>, x) do
+    int_shifted_mes = rem(String.to_integer(mes) + x, 12)
+
+    int_ano = String.to_integer(ano)
+    int_shifted_ano = int_ano + div(x, 12)
+
+    formated_mes = String.pad_leading(Integer.to_string(int_shifted_mes), 2, "0")
+    Integer.to_string(int_shifted_ano) <> formated_mes
   end
 end
