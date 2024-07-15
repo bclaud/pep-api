@@ -14,6 +14,7 @@ nix2containerPkgs.nix2container.buildImage {
       "PHX_SERVER=true"
       "LC_ALL=en_US.UTF-8"
       "LANG=en_US.UTF-8"
+      "ELIXIR_ERL_OPTIONS=+fnu"
       "LOCALE_ARCHIVE=${
         if pkgs.stdenv.isLinux
         then "${pkgs.glibcLocalesUtf8}/lib/locale/locale-archive"
