@@ -18,13 +18,12 @@ defmodule PepWeb.PepsView do
       data_carencia: pep.data_carencia,
       fonte: %{
         ano_mes: pep.source.ano_mes,
-        data_de_insercao: naive_to_utc_sp(pep.source.inserted_at)
+        data_de_insercao: naive_to_utc(pep.source.inserted_at)
       }
     }
   end
 
-  defp naive_to_utc_sp(naive_datetime) do
+  defp naive_to_utc(naive_datetime) do
     DateTime.from_naive!(naive_datetime, "Etc/UTC")
-    |> DateTime.shift_zone!("America/Sao_Paulo", Tzdata.TimeZoneDatabase)
   end
 end
