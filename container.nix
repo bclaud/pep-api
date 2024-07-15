@@ -1,14 +1,14 @@
-{
-  pkgs,
-  nix2containerPkgs,
-  pep,
+{ pkgs
+, nix2containerPkgs
+, pep
+,
 }:
 nix2containerPkgs.nix2container.buildImage {
   name = "pep-container";
   tag = "latest";
 
   config = {
-    Cmd = ["sh" "-c" "bin/pep eval Pep.Release.migrate && bin/pep start"];
+    Cmd = [ "sh" "-c" "bin/pep eval Pep.Release.migrate && bin/pep start" ];
     Env = [
       "USER=nobody"
       "PHX_SERVER=true"
@@ -22,8 +22,8 @@ nix2containerPkgs.nix2container.buildImage {
       }"
     ];
     ExposedPorts = {
-      "80/tcp" = {};
-      "4000/tcp" = {};
+      "80/tcp" = { };
+      "4000/tcp" = { };
     };
   };
 
@@ -32,8 +32,9 @@ nix2containerPkgs.nix2container.buildImage {
     paths = with pkgs; [
       pep
       bash
+      glibcLocalesUtf8
     ];
-    pathsToLink = ["/bin"];
+    pathsToLink = [ "/bin" ];
   };
 
 }

@@ -22,12 +22,12 @@ let
   };
 
 in
-  beamPackages.mixRelease {
-    inherit pname src version elixir ;
+beamPackages.mixRelease {
+  inherit pname src version elixir;
 
-    mixNixDeps = deps;
+  mixNixDeps = deps;
 
-    LC_ALL = "en_US.UTF-8";
-    LANG = "en_US.UTF-8";
-    ELIXIR_ERL_OPTIONS = "+fnu";
-  }
+  LC_ALL = "en_US.UTF-8";
+  LANG = "en_US.UTF-8";
+  ELIXIR_ERL_OPTIONS = "+fnu";
+}
