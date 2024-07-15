@@ -14,7 +14,7 @@ defmodule Pep.Sources.LatestAgent do
   @doc """
   Get the ID of latest source
   """
-  @spec value() :: String.t()
+  @spec value() :: Pep.Source | nil
   def value do
     Agent.get(__MODULE__, & &1)
   end
