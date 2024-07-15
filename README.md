@@ -39,7 +39,10 @@ Não é necessário inserir o nome inteiro, mas deve fornecer ao menos 3 caracte
 
 ### Atualizar dados
 
-Quando houver novas publicações no portal da transparência, basta fazer uma requisição para o endpont abaixo informando o ano_mes que deseja importar.
+As atualizações ocorrerão automaticamente a cada três dias.
+
+Entretanto, é possível importar uma referência chamando o endpoint
+
 ```http
 POST /api/pep/sources/:ano_mes
 ```
@@ -71,8 +74,7 @@ GET /api/pep/sources
 	- ~~Endpoint point para importação das informações~~
 	- ~~Endpoint para consultas~~
 	- ~~Docker~~
-	- Genserver para atualização automática das fontes
-	- Documentação para rodar o projeto localmente
+	- ~~Genserver para atualização automática das fontes~~
 	- Unit Tests
 	- CI com Build distribuido e cache
 	  - Com cache próprio será possível diminuir consideravelmente o tamanho da imagem, visto que é utilizado um elixir/erlang com wx e outros bloats, pois é o disponibilizado pelo cache do nixos/nixpkgs

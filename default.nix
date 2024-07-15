@@ -2,8 +2,8 @@
 with pkgs;
 
 let
-  # beamPackages = beam_minimal.packagesWith beam_minimal.interpreters.erlang_26;
-  # elixir = beam_minimal.packages.erlang_26.elixir_1_16;
+  beamPackages = beam_minimal.packagesWith beam_minimal.interpreters.erlang_26;
+  elixir = beam_minimal.packages.erlang_26.elixir_1_16;
   pname = "pep";
   version = "0.0.1";
 
@@ -11,7 +11,7 @@ let
   deps = import ./mix_deps.nix { inherit lib beamPackages; };
 
   #MixFodDeps only for reference
-  mixFodDeps = pkgs.beamPackages.fetchMixDeps {
+  mixFodDeps = beamPackages.fetchMixDeps {
     pname = "mix-deps-${pname}";
     inherit src version;
     # nix will complain and tell you the right value to replace this with

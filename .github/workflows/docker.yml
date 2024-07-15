@@ -7,7 +7,7 @@ on:
 
 jobs:
   build-and-push:
-    runs-on: namespace-profile-default-arm64
+    runs-on: namespace-profile-arm64-tc-cache
     permissions:
       contents: read
       packages: write
@@ -16,13 +16,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      # - name: ZeroTier
-      #   uses: zerotier/github-action@v1.0.1
-      #   with:
-      #     network_id: ${{ secrets.ZEROTIER_NETWORK_ID }}
-      #     auth_token: ${{ secrets.ZEROTIER_CENTRAL_TOKEN }}
-      #
-
       - name: Setup Nix
         uses: cachix/install-nix-action@v25
         with:
@@ -30,7 +23,7 @@ jobs:
           extra_nix_config: |
             experimental-features = nix-command flakes
 
-      - name: Enable nix cache action
+      - name: Setup Nix cache
         uses: DeterminateSystems/magic-nix-cache-action@main
 
       - name: Build Docker image with Nix
