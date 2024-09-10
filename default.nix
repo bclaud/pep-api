@@ -2,13 +2,13 @@
 with pkgs;
 
 let
-  beamPackages = beam_minimal.packagesWith beam_minimal.interpreters.erlang_26;
+  myBeamPackages = beam_minimal.packagesWith beam_minimal.interpreters.erlang_26;
   elixir = beam_minimal.packages.erlang_26.elixir_1_16;
   pname = "pep";
   version = "0.0.1";
 
   src = ./.;
-  deps = import ./mix_deps.nix { inherit lib beamPackages; };
+  deps = import ./mix_deps.nix { inherit lib; beamPackages = myBeamPackages; };
 
   #MixFodDeps only for reference
   mixFodDeps = beamPackages.fetchMixDeps {
