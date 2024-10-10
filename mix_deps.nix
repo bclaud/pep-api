@@ -153,12 +153,12 @@ let
 
     ecto = buildMix rec {
       name = "ecto";
-      version = "3.12.3";
+      version = "3.12.4";
 
       src = fetchHex {
         pkg = "ecto";
         version = "${version}";
-        sha256 = "9efd91506ae722f95e48dc49e70d0cb632ede3b7a23896252a60a14ac6d59165";
+        sha256 = "ef04e4101688a67d061e1b10d7bc1fbf00d1d13c17eef08b71d070ff9188f747";
       };
 
       beamDeps = [ decimal jason telemetry ];
@@ -166,12 +166,12 @@ let
 
     ecto_sql = buildMix rec {
       name = "ecto_sql";
-      version = "3.12.0";
+      version = "3.12.1";
 
       src = fetchHex {
         pkg = "ecto_sql";
         version = "${version}";
-        sha256 = "dc9e4d206f274f3947e96142a8fdc5f69a2a6a9abb4649ef5c882323b6d512f0";
+        sha256 = "aff5b958a899762c5f09028c847569f7dfb9cc9d63bdb8133bff8a5546de6bf5";
       };
 
       beamDeps = [ db_connection ecto postgrex telemetry ];
@@ -517,12 +517,12 @@ let
 
     swoosh = buildMix rec {
       name = "swoosh";
-      version = "1.17.1";
+      version = "1.17.2";
 
       src = fetchHex {
         pkg = "swoosh";
         version = "${version}";
-        sha256 = "3b20d25e580cb79af631335a1bdcfbffd835c08ebcdc16e98577223a241a18a1";
+        sha256 = "de914359f0ddc134dc0d7735e28922d49d0503f31e4bd66b44e26039c2226d39";
       };
 
       beamDeps = [ cowboy hackney jason mime plug plug_cowboy telemetry ];
