@@ -114,12 +114,12 @@ let
 
     credo = buildMix rec {
       name = "credo";
-      version = "1.7.8";
+      version = "1.7.9";
 
       src = fetchHex {
         pkg = "credo";
         version = "${version}";
-        sha256 = "cb9e87cc64f152f3ed1c6e325e7b894dea8f5ef2e41123bd864e3cd5ceb44968";
+        sha256 = "f87c11c34ba579f7c5044f02b2a807e1ed2fa5fdbb24dc7eb4ad59c1904887f3";
       };
 
       beamDeps = [ bunt file_system jason ];
@@ -348,12 +348,12 @@ let
 
     phoenix_ecto = buildMix rec {
       name = "phoenix_ecto";
-      version = "4.6.2";
+      version = "4.6.3";
 
       src = fetchHex {
         pkg = "phoenix_ecto";
         version = "${version}";
-        sha256 = "3f94d025f59de86be00f5f8c5dd7b5965a3298458d21ab1c328488be3b5fcd59";
+        sha256 = "909502956916a657a197f94cc1206d9a65247538de8a5e186f7537c895d95764";
       };
 
       beamDeps = [ ecto phoenix_html plug postgrex ];
@@ -478,12 +478,12 @@ let
 
     postgrex = buildMix rec {
       name = "postgrex";
-      version = "0.19.1";
+      version = "0.19.2";
 
       src = fetchHex {
         pkg = "postgrex";
         version = "${version}";
-        sha256 = "8bac7885a18f381e091ec6caf41bda7bb8c77912bb0e9285212829afe5d8a8f8";
+        sha256 = "618988886ab7ae8561ebed9a3c7469034bf6a88b8995785a3378746a4b9835ec";
       };
 
       beamDeps = [ db_connection decimal jason ];
