@@ -6,7 +6,7 @@ defmodule Pep.Sources.UpdateJob do
   alias Pep.Sources.Create
   alias Pep
 
-  def(start_link(run_interval)) do
+  def start_link(run_interval) do
     GenServer.start_link(__MODULE__, run_interval, name: __MODULE__)
   end
 
