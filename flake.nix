@@ -37,7 +37,7 @@
         inherit (nixpkgs.lib) optional;
         pkgs = import nixpkgs {
           inherit system;
-          overlays = [elixir_overlay];
+          # overlays = [elixir_overlay];
         };
 
         nix2containerPkgs = nix2container.packages.${system};
