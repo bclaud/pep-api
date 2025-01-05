@@ -22,12 +22,9 @@
       let
         elixir_overlay = (
           self: super: rec {
-            erlang = super.erlang_27;
-            beamPackages = super.beam.packagesWith erlang;
-            elixir = beamPackages.elixir.override {
-              version = "1.17.3";
-              sha256 = "sha256-7Qo6y0KAQ9lwD4oH+7wQ4W5i6INHIBDN9IQAAsYzNJw=";
-            };
+            erlang = super.beamMinimal27Packages.erlang;
+            beamPackages = super.beamMinimal27Packages;
+            elixir = beamPackages.elixir;
             hex = beamPackages.hex.override { inherit elixir; };
             rebar3 = beamPackages.rebar3;
             buildMix = super.beam.packages.erlang.buildMix'.override { inherit elixir erlang hex; };
@@ -37,7 +34,7 @@
         inherit (nixpkgs.lib) optional;
         pkgs = import nixpkgs {
           inherit system;
-          # overlays = [elixir_overlay];
+          overlays = [elixir_overlay];
         };
 
         nix2containerPkgs = nix2container.packages.${system};

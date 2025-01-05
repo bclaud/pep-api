@@ -23,12 +23,12 @@ let
 
     castore = buildMix rec {
       name = "castore";
-      version = "1.0.10";
+      version = "1.0.11";
 
       src = fetchHex {
         pkg = "castore";
         version = "${version}";
-        sha256 = "1b0b7ea14d889d9ea21202c43a4fa015eb913021cb535e8ed91946f4b77a8848";
+        sha256 = "e03990b4db988df56262852f20de0f659871c35154691427a5047f4967a16a62";
       };
 
       beamDeps = [];
@@ -114,12 +114,12 @@ let
 
     credo = buildMix rec {
       name = "credo";
-      version = "1.7.10";
+      version = "1.7.11";
 
       src = fetchHex {
         pkg = "credo";
         version = "${version}";
-        sha256 = "71fbc9a6b8be21d993deca85bf151df023a3097b01e09a2809d460348561d8cd";
+        sha256 = "56826b4306843253a66e47ae45e98e7d284ee1f95d53d1612bb483f88a8cf219";
       };
 
       beamDeps = [ bunt file_system jason ];
@@ -361,12 +361,12 @@ let
 
     phoenix_html = buildMix rec {
       name = "phoenix_html";
-      version = "4.1.1";
+      version = "4.2.0";
 
       src = fetchHex {
         pkg = "phoenix_html";
         version = "${version}";
-        sha256 = "f2f2df5a72bc9a2f510b21497fd7d2b86d932ec0598f0210fed4114adc546c6f";
+        sha256 = "9713b3f238d07043583a94296cc4bbdceacd3b3a6c74667f4df13971e7866ec8";
       };
 
       beamDeps = [];
@@ -374,12 +374,12 @@ let
 
     phoenix_live_dashboard = buildMix rec {
       name = "phoenix_live_dashboard";
-      version = "0.8.5";
+      version = "0.8.6";
 
       src = fetchHex {
         pkg = "phoenix_live_dashboard";
         version = "${version}";
-        sha256 = "1d73920515554d7d6c548aee0bf10a4780568b029d042eccb336db29ea0dad70";
+        sha256 = "1681ab813ec26ca6915beb3414aa138f298e17721dc6a2bde9e6eb8a62360ff6";
       };
 
       beamDeps = [ ecto mime phoenix_live_view telemetry_metrics ];
@@ -517,12 +517,12 @@ let
 
     swoosh = buildMix rec {
       name = "swoosh";
-      version = "1.17.5";
+      version = "1.17.6";
 
       src = fetchHex {
         pkg = "swoosh";
         version = "${version}";
-        sha256 = "629113d477bc82c4c3bffd15a25e8becc1c7ccc0f0e67743b017caddebb06f04";
+        sha256 = "9798f3e72165f40c950f6762c06dab68afcdcf616138fc4a07965c09c250e1e2";
       };
 
       beamDeps = [ cowboy hackney jason mime plug plug_cowboy telemetry ];

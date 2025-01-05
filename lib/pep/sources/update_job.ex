@@ -27,7 +27,11 @@ defmodule Pep.Sources.UpdateJob do
 
     latest_source = LatestAgent.value()
 
-    Logger.info("#{__MODULE__} Latest source #{inspect(latest_source.ano_mes)}")
+    if is_nil(latest_source) do
+      Logger.info("#{__MODULE__} Latest source is nil")
+    else
+      Logger.info("#{__MODULE__} Latest source is #{inspect(latest_source.ano_mes)}")
+    end
 
     case latest_source do
       nil ->
@@ -53,13 +57,18 @@ defmodule Pep.Sources.UpdateJob do
     {:noreply, run_interval, {:continue, :schedule_next_run}}
   end
 
-  defp shift_ano_mes(<<ano::binary-size(4), mes::binary>>, x) do
-    int_shifted_mes = rem(String.to_integer(mes) + x, 12)
+  def shift_ano_mes(<<ano::binary-size(4), mes::binary>>, x) do
+    int_mounth = String.to_integer(mes)
+    int_year = String.to_integer(ano)
 
-    int_ano = String.to_integer(ano)
-    int_shifted_ano = int_ano + div(x, 12)
+    total_months = int_mounth + x - 1
 
-    formated_mes = String.pad_leading(Integer.to_string(int_shifted_mes), 2, "0")
-    Integer.to_string(int_shifted_ano) <> formated_mes
+    int_shifted_mounth = rem(total_months, 12) + 1
+
+    years_to_add = div(total_months, 12)
+    int_shifted_year = int_year + years_to_add
+
+    formated_mounth = String.pad_leading(Integer.to_string(int_shifted_mounth), 2, "0")
+    Integer.to_string(int_shifted_year) <> formated_mounth
   end
 end

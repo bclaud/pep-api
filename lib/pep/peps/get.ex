@@ -32,11 +32,19 @@ defmodule Pep.Peps.Get do
   def get_last_source() do
     query = from s in Pep.Source, select: [s.ano_mes, s.id]
 
-    [_ano_mes, id] =
-      Repo.all(query)
-      |> Enum.map(fn each -> List.update_at(each, 0, &String.to_integer/1) end)
-      |> Enum.max()
+    result = Repo.all(query)
 
-    Repo.get(Pep.Source, id)
+    case result do
+      [] ->
+        nil
+
+      _ ->
+        [_ano_mes, id] =
+          result
+          |> Enum.map(fn each -> List.update_at(each, 0, &String.to_integer/1) end)
+          |> Enum.max()
+
+        Repo.get(Pep.Source, id)
+    end
   end
 end
