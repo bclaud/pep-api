@@ -41,3 +41,4 @@ priv/downloaded/*
 #env vars
 env.list
 .env
+result
