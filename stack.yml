@@ -1,0 +1,27 @@
+services:
+  app:
+    image: 'baclaud/pep-api:latest'
+    restart: unless-stopped
+    ports:
+      - '4000:4000'
+    volumes:
+      - ./pep-api/data:/data
+    environment:
+       DATABASE_URL: "ecto://postgres:postgres@db:5432/pepdb"
+       SECRET_KEY_BASE: "O+7MDbP2QBbLCoNSsvv8sUluM8YBuyfA8Xi9UKQgpcfH7NyIgqzfl6qKJJXJTxeF"
+       RELEASE_COOKIE: "safecookie"
+       RELEASE_NAME: "beta"
+
+       PHX_HOST: localhost
+
+    depends_on:
+      - db
+  db:
+    image: 'postgres'
+    restart: unless-stopped
+    environment:
+      POSTGRES_PASSWORD: "postgres"
+      POSTGRES_DB: "pepdb"
+      POSTGRES_USER: "postgres"
+    volumes:
+      - ./pep-api/db/postgres:/var/lib/postgres
