@@ -75,6 +75,7 @@ GET /api/pep/sources
 	- ~~Endpoint para consultas~~
 	- ~~Docker~~
 	- ~~Genserver para atualização automática das fontes~~
+	- cloud flare cache invalidation quando atualizar as fontes de consulta
 	- Unit Tests
 	- CI com Build distribuido e cache
 	  - Com cache próprio será possível diminuir consideravelmente o tamanho da imagem, visto que é utilizado um elixir/erlang com wx e outros bloats, pois é o disponibilizado pelo cache do nixos/nixpkgs
