@@ -58,17 +58,23 @@ defmodule Pep.Sources.UpdateJob do
   end
 
   def shift_ano_mes(<<ano::binary-size(4), mes::binary>>, x) do
-    int_mounth = String.to_integer(mes)
+    int_month = String.to_integer(mes)
     int_year = String.to_integer(ano)
 
-    total_months = int_mounth + x - 1
+    idx = int_month - 1
+    total_idx = idx + x
 
-    int_shifted_mounth = rem(total_months, 12) + 1
+    {years_to_add, shifted_idx} =
+      if total_idx >= 0 do
+        {div(total_idx, 12), rem(total_idx, 12)}
+      else
+        {div(total_idx + 1, 12) - 1, rem(total_idx + 1, 12) + 11}
+      end
 
-    years_to_add = div(total_months, 12)
     int_shifted_year = int_year + years_to_add
+    int_shifted_month = shifted_idx + 1
 
-    formated_mounth = String.pad_leading(Integer.to_string(int_shifted_mounth), 2, "0")
-    Integer.to_string(int_shifted_year) <> formated_mounth
+    formatted_month = String.pad_leading(Integer.to_string(int_shifted_month), 2, "0")
+    Integer.to_string(int_shifted_year) <> formatted_month
   end
 end
