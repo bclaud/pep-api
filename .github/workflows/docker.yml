@@ -19,14 +19,9 @@ jobs:
         with:
           path: .
 
-      - name: Configure Nix cache
-        uses: namespacelabs/nscloud-cache-action@v1
-        with:
-          cache: nix
-
       - name: Start Nix daemon
         run: |
-          /nix/var/nix/profiles/default/bin/nix-daemon &
+          sudo /nix/var/nix/profiles/default/bin/nix-daemon &
           sleep 2
 
       - name: Build Docker image with Nix
