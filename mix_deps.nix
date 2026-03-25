@@ -101,12 +101,12 @@ let
 
     credo = buildMix rec {
       name = "credo";
-      version = "1.7.11";
+      version = "1.7.17";
 
       src = fetchHex {
         pkg = "credo";
         version = "${version}";
-        sha256 = "56826b4306843253a66e47ae45e98e7d284ee1f95d53d1612bb483f88a8cf219";
+        sha256 = "1eb5645c835f0b6c9b5410f94b5a185057bcf6d62a9c2b476da971cde8749645";
       };
 
       beamDeps = [ bunt file_system jason ];
@@ -179,12 +179,12 @@ let
 
     file_system = buildMix rec {
       name = "file_system";
-      version = "1.1.0";
+      version = "1.1.1";
 
       src = fetchHex {
         pkg = "file_system";
         version = "${version}";
-        sha256 = "bfcf81244f416871f2a2e15c1b515287faa5db9c6bcf290222206d120b3d43f6";
+        sha256 = "7a15ff97dfe526aeefb090a7a9d3d03aa907e100e262a0f8f7746b78f8f87a5d";
       };
 
       beamDeps = [];
