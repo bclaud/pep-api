@@ -9,22 +9,20 @@ jobs:
   build-and-push:
     runs-on: namespace-profile-arm64-tc-cache
     permissions:
+      id-token: write
       contents: read
       packages: write
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup Nix
-        uses: cachix/install-nix-action@v25
+      - name: Check out repository
+        uses: namespacelabs/nscloud-checkout-action@v8
         with:
-          install_url: https://releases.nixos.org/nix/nix-2.19.3/install
-          extra_nix_config: |
-            experimental-features = nix-command flakes
+          path: .
 
-      - name: Setup Nix cache
-        uses: DeterminateSystems/magic-nix-cache-action@main
+      - name: Configure Nix cache
+        uses: namespacelabs/nscloud-cache-action@v1
+        with:
+          cache: nix
 
       - name: Build Docker image with Nix
         run: nix run .#container.copyToDockerDaemon
@@ -37,8 +35,11 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Push Docker image to GitHub Container Registry
+        env:
+          SHA: ${{ github.sha }}
         run: |
-          IMAGE_ID=ghcr.io/${{ github.repository }}/pep-container:latest
-          docker tag $(docker images --format "{{.Repository}}:{{.Tag}}" | head -n 1) $IMAGE_ID
-          docker push $IMAGE_ID
-
+          IMAGE_ID=ghcr.io/${{ github.repository }}/pep-container
+          docker tag $(docker images --format "{{.Repository}}:{{.Tag}}" | head -n 1) ${IMAGE_ID}:latest
+          docker tag $(docker images --format "{{.Repository}}:{{.Tag}}" | head -n 1) ${IMAGE_ID}:sha-${SHA:0:7}
+          docker push ${IMAGE_ID}:latest
+          docker push ${IMAGE_ID}:sha-${SHA:0:7}
