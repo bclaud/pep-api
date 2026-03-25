@@ -9,6 +9,7 @@ let
 in
 beamPackages.mixRelease {
   inherit pname src version;
+  elixir = beamPackages.elixir;
   mixNixDeps = deps;
   ELIXIR_ERL_OPTIONS = "+fnu";
 }
