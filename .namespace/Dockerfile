@@ -1,4 +1,4 @@
-ARG NAMESPACE_BASE_IMAGE_REF=""
+ARG NAMESPACE_BASE_IMAGE_REF
 FROM ${NAMESPACE_BASE_IMAGE_REF} AS base
 
 RUN apt-get update && apt-get install -y curl && rm -rf /var/lib/apt/lists/*
