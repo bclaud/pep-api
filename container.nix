@@ -15,26 +15,16 @@ nix2containerPkgs.nix2container.buildImage {
       "LC_ALL=en_US.UTF-8"
       "LANG=en_US.UTF-8"
       "ELIXIR_ERL_OPTIONS=+fnu"
-      "LOCALE_ARCHIVE=${
-        if pkgs.stdenv.isLinux
-        then "${pkgs.glibcLocalesUtf8}/lib/locale/locale-archive"
-        else ""
-      }"
+      "LOCALE_ARCHIVE=${if pkgs.stdenv.isLinux then "${pkgs.glibcLocalesUtf8}/lib/locale/locale-archive" else ""}"
     ];
     ExposedPorts = {
-      "80/tcp" = { };
       "4000/tcp" = { };
     };
   };
 
   copyToRoot = pkgs.buildEnv {
     name = "image-root";
-    paths = with pkgs; [
-      pep
-      bash
-      glibcLocalesUtf8
-    ];
+    paths = with pkgs; [ pep bash glibcLocalesUtf8 ];
     pathsToLink = [ "/bin" ];
   };
-
 }
