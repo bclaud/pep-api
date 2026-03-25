@@ -14,6 +14,7 @@ RUN apt-get update \
       curl \
       ca-certificates \
       xz-utils \
+      sudo \
  && rm -rf /var/lib/apt/lists/*
 
 # Install Nix in multi-user mode without systemd.
