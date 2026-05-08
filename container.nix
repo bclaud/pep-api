@@ -3,7 +3,7 @@
 , ...
 }:
 pkgs.dockerTools.buildImage {
-  name = "ghcr.io/bclaud/pep-api/pep-container";
+  name = "pep-api/pep-container";
   tag = "latest";
 
   copyToRoot = pkgs.buildEnv {

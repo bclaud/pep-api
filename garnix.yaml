@@ -3,6 +3,6 @@ builds:
       - 'packages.aarch64-linux.container'
     deploy:
       - type: container
-        image: ghcr.io/bclaud/pep-api/pep-container
+        image: pep-api/pep-container
         registry:
           type: github
