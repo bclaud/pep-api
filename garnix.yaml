@@ -1,8 +1,7 @@
 builds:
   - include:
       - 'packages.aarch64-linux.container'
-    deploy:
-      - type: container
-        image: pep-api/pep-container
-        registry:
-          type: github
+
+actions:
+  - on: push
+    run: push-container
