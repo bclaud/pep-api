@@ -4,13 +4,9 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     flake-utils.url = "github:numtide/flake-utils";
-    nix2container = {
-      url = "github:nlewo/nix2container";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
-  outputs = { self, nixpkgs, flake-utils, nix2container }:
+  outputs = { self, nixpkgs, flake-utils }:
     let
       supportedSystems = [
         "x86_64-linux"
@@ -34,8 +30,6 @@
             })
           ];
         };
-
-        nix2containerPkgs = nix2container.packages.${system};
       in
       {
         devShells.default = pkgs.mkShell {
@@ -64,10 +58,7 @@
 
         packages = rec {
           pep = pkgs.callPackage ./default.nix { };
-          container = pkgs.callPackage ./container.nix {
-            inherit nix2containerPkgs;
-            inherit pep;
-          };
+          container = pkgs.callPackage ./container.nix { inherit pep; };
           defaultPackage = pep;
         };
 

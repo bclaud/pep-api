@@ -1,11 +1,16 @@
 { pkgs
-, nix2containerPkgs
 , pep
-,
+, ...
 }:
-nix2containerPkgs.nix2container.buildImage {
-  name = "pep-container";
+pkgs.dockerTools.buildImage {
+  name = "ghcr.io/bclaud/pep-api/pep-container";
   tag = "latest";
+
+  copyToRoot = pkgs.buildEnv {
+    name = "image-root";
+    paths = [ pep pkgs.bash pkgs.glibcLocalesUtf8 ];
+    pathsToLink = [ "/bin" ];
+  };
 
   config = {
     Cmd = [ "sh" "-c" "bin/pep eval Pep.Release.migrate && bin/pep start" ];
@@ -20,11 +25,5 @@ nix2containerPkgs.nix2container.buildImage {
     ExposedPorts = {
       "4000/tcp" = { };
     };
-  };
-
-  copyToRoot = pkgs.buildEnv {
-    name = "image-root";
-    paths = with pkgs; [ pep bash glibcLocalesUtf8 ];
-    pathsToLink = [ "/bin" ];
   };
 }
