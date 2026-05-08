@@ -2,9 +2,9 @@ defmodule Pep.Sources.UpdateJob do
   use GenServer, restart: :transient
   require Logger
 
-  alias Pep.Sources.LatestAgent
-  alias Pep.Sources.Create
   alias Pep
+  alias Pep.Sources.Create
+  alias Pep.Sources.LatestAgent
 
   def start_link(run_interval) do
     GenServer.start_link(__MODULE__, run_interval, name: __MODULE__)
@@ -35,7 +35,6 @@ defmodule Pep.Sources.UpdateJob do
 
     case latest_source do
       nil ->
-        # I could easily start downloading the current source here but not sure if it's a good idea
         Logger.info(
           "#{__MODULE__} There is no pep source to look for. Skipping source update job"
         )
@@ -44,9 +43,7 @@ defmodule Pep.Sources.UpdateJob do
         update_range = -3..3
 
         Enum.each(update_range, fn x ->
-          target_ano_mes = shift_ano_mes(source.ano_mes, x)
-          Logger.info("#{__MODULE__} Requesting #{target_ano_mes}...")
-          Create.call(target_ano_mes)
+          source.ano_mes |> shift_ano_mes(x) |> attempt_import()
         end)
     end
 
@@ -55,6 +52,16 @@ defmodule Pep.Sources.UpdateJob do
 
     Logger.info("#{__MODULE__} Finished cron job...")
     {:noreply, run_interval, {:continue, :schedule_next_run}}
+  end
+
+  defp attempt_import(target_ano_mes) do
+    case Create.call(target_ano_mes) do
+      {:ok, %Pep.Source{ano_mes: ^target_ano_mes}} ->
+        Logger.info("#{__MODULE__} Imported #{target_ano_mes}")
+
+      {:error, reason} ->
+        Logger.warning("#{__MODULE__} Skipping #{target_ano_mes}: #{inspect(reason)}")
+    end
   end
 
   def shift_ano_mes(<<ano::binary-size(4), mes::binary>>, x) do

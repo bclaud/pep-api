@@ -65,6 +65,15 @@ if config_env() == :prod do
   # Then you can assemble a release by calling `mix release`.
   # See `mix help release` for more information.
 
+  cloudflare_zone_id = System.get_env("CLOUDFLARE_ZONE_ID")
+  cloudflare_api_token = System.get_env("CLOUDFLARE_API_TOKEN")
+
+  if cloudflare_zone_id && cloudflare_api_token do
+    config :pep, :cloudflare,
+      zone_id: cloudflare_zone_id,
+      api_token: cloudflare_api_token
+  end
+
   # ## Configuring the mailer
   #
   # In production you need to configure the mailer to use a different adapter.

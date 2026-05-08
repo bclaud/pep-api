@@ -7,7 +7,7 @@ defmodule Pep.Sources.Parser do
 
   def import_to_db(ano_mes) do
     create_directories()
-    Task.start_link(fn -> parse_import_to_db(ano_mes) end)
+    Task.start(fn -> parse_import_to_db(ano_mes) end)
   end
 
   defp parse_import_to_db(ano_mes) do
