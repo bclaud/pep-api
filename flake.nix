@@ -83,6 +83,11 @@
           TOKEN=$(age -d -i "$GARNIX_ACTION_PRIVATE_KEY_FILE" "${
             ./secrets/ghcr-token.age
           }")
+          SHORT_SHA=''${GARNIX_COMMIT_SHA:0:7}
+          skopeo copy \
+            --dest-creds "bclaud:$TOKEN" \
+            "docker-archive:${self.packages.aarch64-linux.container}" \
+            docker://ghcr.io/bclaud/pep-api/pep-container:"sha-$SHORT_SHA"
           skopeo copy \
             --dest-creds "bclaud:$TOKEN" \
             "docker-archive:${self.packages.aarch64-linux.container}" \
