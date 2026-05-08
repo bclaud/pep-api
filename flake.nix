@@ -74,6 +74,12 @@
         text = ''
           set -euo pipefail
           export HOME=$PWD
+
+          mkdir -p "$HOME/.config/containers"
+          cat > "$HOME/.config/containers/policy.json" <<'POLICY'
+          {"default": [{"type": "insecureAcceptAnything"}]}
+          POLICY
+
           TOKEN=$(age -d -i "$GARNIX_ACTION_PRIVATE_KEY_FILE" "${
             ./secrets/ghcr-token.age
           }")
